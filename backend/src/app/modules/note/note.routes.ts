@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ADMIN_ROLES, USER_ROLES } from '@/constants';
+import { USER_ROLES } from '@/constants';
 import authorizeUser from '@/middlewares/authorizeUser';
 import validateRequest from '@/middlewares/validateRequest';
 import { noteControllers } from '@/modules/note/note.controllers';
@@ -23,14 +23,14 @@ router.patch(
 	'/:id',
 	validateRequest(noteValidations.updateSchema),
 	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('update_note'),
+	checkNoteOwnership('PATCH: /notes/:id'),
 	noteControllers.updateNote
 );
 
 router.delete(
 	'/:id',
 	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('delete_note'),
+	checkNoteOwnership('DELETE: /notes/:id'),
 	noteControllers.deleteNote
 );
 

@@ -3,7 +3,7 @@ import { STATUS_CODES } from 'nhb-toolbox/constants';
 import type { Maybe } from 'nhb-toolbox/types';
 import z from 'zod';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
-import type { TCollection } from '@/types';
+import type { ErrorPath, TCollection } from '@/types';
 
 /**
  * * Utility to check MongoDB `ObjectId`
@@ -14,7 +14,7 @@ import type { TCollection } from '@/types';
 export const validateObjectId = (
 	id: Types.ObjectId | string,
 	collection: Lowercase<TCollection>,
-	path: string
+	path: ErrorPath
 ) => {
 	if (!isValidObjectId(id)) {
 		throw new ErrorWithStatus(

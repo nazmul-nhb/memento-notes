@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ADMIN_ROLES, USER_ROLES } from '@/constants';
+import { USER_ROLES } from '@/constants';
 import authorizeUser from '@/middlewares/authorizeUser';
 import validateRequest from '@/middlewares/validateRequest';
 import { userControllers } from '@/modules/user/user.controllers';

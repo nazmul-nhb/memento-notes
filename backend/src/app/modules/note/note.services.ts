@@ -41,7 +41,7 @@ const updateNoteInDB = async (id: string, payload: TUpdateNote) => {
 			'Not Updated Error',
 			`Cannot update specified note with ID ${id}!`,
 			STATUS_CODES.INTERNAL_SERVER_ERROR,
-			'update_note'
+			'PATCH: /notes/:id'
 		);
 	}
 
@@ -56,7 +56,7 @@ const deleteNoteFromDB = async (id: string) => {
 			'Delete Failed Error',
 			`Failed to delete note with ID ${id}!`,
 			STATUS_CODES.INTERNAL_SERVER_ERROR,
-			'delete_note'
+			'DELETE: /notes/:id'
 		);
 	}
 

@@ -2,6 +2,7 @@ import { STATUS_CODES } from 'nhb-toolbox/constants';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import { isAdmin } from '@/modules/auth/auth.utils';
 import { Note } from '@/modules/note/note.model';
+import type { ErrorPath } from '@/types';
 import catchAsync from '@/utilities/catchAsync';
 import { areObjectIdsEqual } from '@/utilities/validateObjectId';
 
@@ -13,7 +14,7 @@ import { areObjectIdsEqual } from '@/utilities/validateObjectId';
  * - User can only access their own notes.
  * - Admin can access all notes.
  */
-export function checkNoteOwnership(path: string) {
+export function checkNoteOwnership(path: ErrorPath) {
 	return catchAsync(async (req, _res, next) => {
 		const note = await Note.findNoteById(req.params.id, path);
 		const user = req.user;

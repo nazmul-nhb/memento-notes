@@ -33,7 +33,7 @@ const getCurrentUserFromDB = async (email: TEmail | undefined) => {
 
 /** * Get a single user from DB. */
 const getSingleUserFromDB = async (id: string) => {
-	validateObjectId(id, 'user', 'get_user');
+	validateObjectId(id, 'user', 'GET: /users/:id');
 
 	const user = await User.findById(id);
 
@@ -42,7 +42,7 @@ const getSingleUserFromDB = async (id: string) => {
 			'Not Found Error',
 			`No user found with ID: ${id}!`,
 			STATUS_CODES.NOT_FOUND,
-			'get_user'
+			'GET: /users/:id'
 		);
 	}
 
@@ -55,7 +55,7 @@ const updateUserInDB = async (
 	payload: Partial<TUser>,
 	updater: Maybe<DecodedUser>
 ) => {
-	validateObjectId(id, 'user', 'update_user');
+	validateObjectId(id, 'user', 'PATCH: /users/:id');
 
 	const user = await getSingleUserFromDB(id);
 
@@ -64,7 +64,7 @@ const updateUserInDB = async (
 			'Forbidden Request',
 			"You can't update other admin's information!",
 			STATUS_CODES.FORBIDDEN,
-			'update_user'
+			'PATCH: /users/:id'
 		);
 	}
 
@@ -83,7 +83,7 @@ const updateUserInDB = async (
 			'Not Found Error',
 			`No user found with ID: ${id}!`,
 			STATUS_CODES.NOT_FOUND,
-			'update_user'
+			'PATCH: /users/:id'
 		);
 	}
 
@@ -91,7 +91,7 @@ const updateUserInDB = async (
 };
 
 const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
-	validateObjectId(id, 'user', 'delete_user');
+	validateObjectId(id, 'user', 'DELETE: /users/:id');
 
 	const user = await getSingleUserFromDB(id);
 
@@ -100,7 +100,7 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 			'Bad Request',
 			"You can't delete your own account!",
 			STATUS_CODES.BAD_REQUEST,
-			'delete_user'
+			'DELETE: /users/:id'
 		);
 	}
 
@@ -109,7 +109,7 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 			'Bad Request',
 			"You can't delete an admin account!",
 			STATUS_CODES.BAD_REQUEST,
-			'delete_user'
+			'DELETE: /users/:id'
 		);
 	}
 
@@ -120,7 +120,7 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 			'Delete Failed Error',
 			`Failed to delete User with ID ${id}!`,
 			STATUS_CODES.INTERNAL_SERVER_ERROR,
-			'delete_User'
+			'DELETE: /users/:id'
 		);
 	}
 

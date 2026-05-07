@@ -21,7 +21,7 @@ const loginUser = catchAsync(async (req, res) => {
 		httpOnly: true,
 	});
 
-	sendResponse(res, 'User', 'OK', { user, token: access_token }, 'Login successful!');
+	sendResponse(res, 'User', 'POST', { user, token: access_token }, 'Login successful!');
 });
 
 /** * Generate new access token. */
@@ -30,7 +30,7 @@ const refreshToken = catchAsync(async (req, res) => {
 
 	const token = await authServices.refreshToken(refresh_token);
 
-	sendResponse(res, 'N/A', 'OK', token, 'Successfully retrieved new access token!');
+	sendResponse(res, 'N/A', 'GET', token, 'Successfully retrieved new access token!');
 });
 
 export const authControllers = {

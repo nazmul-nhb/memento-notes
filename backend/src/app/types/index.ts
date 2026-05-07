@@ -1,6 +1,6 @@
 import type { Types } from 'mongoose';
 import type { HttpStatusCode, StatusCode } from 'nhb-toolbox/http-status/types';
-import type { Prettify } from 'nhb-toolbox/utils/types';
+import type { LooseLiteral, Prettify } from 'nhb-toolbox/utils/types';
 import type { COLLECTIONS, USER_ROLES } from '@/constants';
 import type { TLoginCredentials } from '@/modules/user/user.types';
 
@@ -8,7 +8,7 @@ export type ExceptionSignal = NodeJS.UncaughtExceptionOrigin | NodeJS.Signals;
 
 export type TCollection = (typeof COLLECTIONS)[number];
 
-export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'OK';
+export type TMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export type TResponseDetails = { message: string; statusCode: StatusCode };
 
@@ -51,3 +51,7 @@ type FilterKeys<T> = {
 
 /** * Utility type to exclude Mongoose virtual properties (e.g., isNew). */
 type ExcludeVirtuals<T> = Exclude<T, 'isNew' | 'id'>;
+
+type ApiPath = `${Lowercase<Exclude<TCollection, 'N/A'>>}s`;
+
+export type ErrorPath = LooseLiteral<`${TMethod}: /${ApiPath | `${ApiPath}/:id`}`>;

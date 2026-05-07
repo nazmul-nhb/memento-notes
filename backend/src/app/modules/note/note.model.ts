@@ -38,7 +38,7 @@ noteSchema.index({ user_id: 'asc', created_at: 'desc' });
 noteSchema.index({ _id: 'asc', user_id: 'asc' });
 
 noteSchema.statics.findNoteById = async function (id: string, path?: string) {
-	validateObjectId(id, 'note', path || 'get_note');
+	validateObjectId(id, 'note', path || 'GET: /notes/:id');
 
 	const note = await this.findById(id);
 
@@ -47,7 +47,7 @@ noteSchema.statics.findNoteById = async function (id: string, path?: string) {
 			'Not Found Error',
 			`No note found with ID ${id}!`,
 			STATUS_CODES.NOT_FOUND,
-			path || 'get_note'
+			path || 'GET: /notes/:id'
 		);
 	}
 
