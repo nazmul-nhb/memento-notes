@@ -38,7 +38,7 @@ const getAllNotesForAdminFromDB = async (query?: Record<string, unknown>) => {
 const updateNoteInDB = async (id: string, payload: TUpdateNote) => {
 	const updatedNote = await Note.findOneAndUpdate({ _id: id }, payload, {
 		runValidators: true,
-		new: true,
+		returnDocument: 'after',
 	});
 
 	if (!updatedNote) {

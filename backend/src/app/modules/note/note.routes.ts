@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { USER_ROLES } from '@/constants';
 import authorizeUser from '@/middlewares/authorizeUser';
+import { checkOwnership } from '@/middlewares/checkOwnership';
 import validateRequest from '@/middlewares/validateRequest';
 import { noteControllers } from '@/modules/note/note.controllers';
-import { checkNoteOwnership } from '@/modules/note/note.middlewares';
+import { Note } from '@/modules/note/note.model';
 import { noteValidations } from '@/modules/note/note.validation';
 
 const router = Router();
@@ -23,14 +24,14 @@ router.patch(
 	'/:id',
 	validateRequest(noteValidations.updateSchema),
 	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('PATCH: /notes/:id'),
+	checkOwnership(Note, 'note', 'PATCH: /notes/:id'),
 	noteControllers.updateNote
 );
 
 router.delete(
 	'/:id',
 	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('DELETE: /notes/:id'),
+	checkOwnership(Note, 'note', 'DELETE: /notes/:id'),
 	noteControllers.deleteNote
 );
 

@@ -79,7 +79,6 @@ const updateUserInDB = async (
 
 	const updatedUser = await User.findOneAndUpdate({ _id: id }, payload, {
 		runValidators: true,
-		upsert: false,
 		returnDocument: 'after',
 	});
 

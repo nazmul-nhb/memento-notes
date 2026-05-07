@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import type { IPostDoc, IPostModel } from '@/modules/post/post.types';
+import { validateObjectId } from '@/utilities/validateObjectId';
 
 const postSchema = new Schema<IPostDoc>(
 	{
@@ -37,14 +38,7 @@ postSchema.index({ user_id: 'asc', created_at: 'desc' });
 postSchema.index({ _id: 'asc', user_id: 'asc' });
 
 postSchema.statics.findPostById = async function (id: string) {
-	if (!id) {
-		throw new ErrorWithStatus(
-			'Bad Request',
-			'Please provide a valid ID!',
-			STATUS_CODES.BAD_REQUEST,
-			'post'
-		);
-	}
+	validateObjectId(id, 'post', 'GET: /posts/:id');
 
 	const post = await this.findById(id);
 
