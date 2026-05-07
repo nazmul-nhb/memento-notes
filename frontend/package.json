@@ -1,0 +1,44 @@
+{
+	"name": "memento-notes-frontend",
+	"private": true,
+	"version": "0.1.1",
+	"description": "Memento Notes Frontend",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"start": "vite preview",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome lint --diagnostic-level=error",
+		"fix": "biome check --write --diagnostic-level=error",
+		"format": "biome format --write --diagnostic-level=error",
+		"commit": "nhb-commit",
+		"count": "nhb-count"
+	},
+	"author": {
+		"name": "Nazmul Hassan",
+		"email": "nazmulnhb@gmail.com",
+		"url": "https://nazmul-nhb.dev"
+	},
+	"dependencies": {
+		"nhb-toolbox": "^4.30.1",
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.29.0",
+		"@biomejs/biome": "^2.4.14",
+		"@rolldown/plugin-babel": "^0.2.3",
+		"@tailwindcss/vite": "^4.2.4",
+		"@types/babel__core": "^7.20.5",
+		"@types/node": "^25.6.0",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^6.0.1",
+		"babel-plugin-react-compiler": "^1.0.0",
+		"nhb-scripts": "^1.9.2",
+		"tailwindcss": "^4.2.4",
+		"typescript": "~6.0.3",
+		"vite": "^8.0.10"
+	}
+}
