@@ -24,16 +24,16 @@ const getCurrentUser = catchAsync(async (req, res) => {
 });
 
 // const getSingleUser = catchAsync(async (req, res) => {
-// 	const User = await userServices.getSingleUserFromDB(req?.params?.id);
+// 	const user = await userServices.getSingleUserFromDB(req?.params?.id);
 
-// 	sendResponse(res, 'User', 'GET', User);
+// 	sendResponse(res, 'User', 'GET', user);
 // });
 
 /** * Update a user in DB. */
 const updateUser = catchAsync(async (req, res) => {
-	const User = await userServices.updateUserInDB(req?.params?.id, req?.body, req.user);
+	const user = await userServices.updateUserInDB(req?.params?.id, req?.body, req.user);
 
-	sendResponse(res, 'User', 'PATCH', User);
+	sendResponse(res, 'User', 'PATCH', user);
 });
 
 /** * Remove a user from DB. */
@@ -43,6 +43,12 @@ const removeUser = catchAsync(async (req, res) => {
 	sendResponse(res, 'User', 'DELETE', result);
 });
 
+const groupUsersByInterest = catchAsync(async (_req, res) => {
+	const users = await userServices.groupUsersByInterestFromDB();
+
+	sendResponse(res, 'User', 'GET', users);
+});
+
 export const userControllers = {
 	createUser,
 	getAllUsers,
@@ -50,4 +56,5 @@ export const userControllers = {
 	// getSingleUser,
 	updateUser,
 	removeUser,
+	groupUsersByInterest,
 };

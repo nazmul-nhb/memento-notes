@@ -132,6 +132,36 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 	return result;
 };
 
+const groupUsersByInterestFromDB = async () => {
+	const users = await User.aggregate([
+		{ $unwind: '$interests' },
+		{
+			$group: {
+				_id: '$interests',
+				users: {
+					$push: { _id: '$_id', name: '$name', email: '$email', role: '$role' },
+				},
+				count: { $sum: 1 },
+			},
+		},
+		{
+			$addFields: {
+				interest: '$_id',
+			},
+		},
+		{
+			$project: {
+				_id: 0,
+				interest: 1,
+				users: 1,
+				count: 1,
+			},
+		},
+	]);
+
+	return users;
+};
+
 export const userServices = {
 	createUserInDB,
 	getAllUsersFromDB,
@@ -139,4 +169,5 @@ export const userServices = {
 	getSingleUserFromDB,
 	updateUserInDB,
 	removeUserFromDB,
+	groupUsersByInterestFromDB,
 };

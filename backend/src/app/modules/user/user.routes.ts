@@ -29,4 +29,6 @@ router.delete('/:id', authorizeUser('admin'), userControllers.removeUser);
 
 router.get('/me', authorizeUser(...USER_ROLES), userControllers.getCurrentUser);
 
+router.get('/interest', authorizeUser('admin'), userControllers.groupUsersByInterest);
+
 export const userRoutes = router;
