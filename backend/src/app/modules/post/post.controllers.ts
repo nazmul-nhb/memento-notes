@@ -1,0 +1,41 @@
+import { postServices } from '@/modules/post/post.services';
+import catchAsync from '@/utilities/catchAsync';
+import sendResponse from '@/utilities/sendResponse';
+
+const createPost = catchAsync(async (req, res) => {
+	const newPost = await postServices.createPostInDB(req.body);
+
+	sendResponse(res, 'Post', 'POST', newPost);
+});
+
+const getAllPosts = catchAsync(async (_req, res) => {
+	const posts = await postServices.getAllPostsFromDB();
+
+	sendResponse(res, 'Post', 'GET', posts);
+});
+
+const getSinglePost = catchAsync(async (req, res) => {
+	const post = await postServices.getSinglePostFromDB(req?.params?.id);
+
+	sendResponse(res, 'Post', 'GET', post);
+});
+
+const updatePost = catchAsync(async (req, res) => {
+	const post = await postServices.updatePostInDB(req?.params?.id, req?.body);
+
+	sendResponse(res, 'Post', 'PATCH', post);
+});
+
+const deletePost = catchAsync(async (req, res) => {
+	await postServices.deletePostFromDB(req?.params?.id);
+
+	sendResponse(res, 'Post', 'DELETE');
+});
+
+export const postControllers = {
+	createPost,
+	getAllPosts,
+	getSinglePost,
+	updatePost,
+	deletePost,
+};

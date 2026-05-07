@@ -53,5 +53,7 @@ type FilterKeys<T> = {
 type ExcludeVirtuals<T> = Exclude<T, 'isNew' | 'id'>;
 
 type ApiPath = `${Lowercase<Exclude<TCollection, 'N/A'>>}s`;
+type PathWithId = `${Exclude<TMethod, 'POST'>}: /${ApiPath}/:id`;
+type PathWithoutId = `${Exclude<TMethod, 'PATCH' | 'PUT' | 'DELETE'>}: /${ApiPath}`;
 
-export type ErrorPath = LooseLiteral<`${TMethod}: /${ApiPath | `${ApiPath}/:id`}`>;
+export type ErrorPath = LooseLiteral<PathWithoutId | PathWithId>;

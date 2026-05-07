@@ -7,7 +7,10 @@ const creationSchema = z
 			.min(1, 'Title is required')
 			.max(255, 'Title is too long')
 			.trim(),
-		content: z.string('Content should be a string').min(1, 'Content is required').trim(),
+		content: z
+			.string('Content/Body should be a string')
+			.min(1, 'Content/Body is required')
+			.trim(),
 	})
 	.strict();
 
