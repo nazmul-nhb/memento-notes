@@ -5,4 +5,4 @@ export const USER_ROLES = ['admin', 'user'] as const;
 export const ADMIN_ROLES = USER_ROLES.filter((role) => role !== 'user');
 
 /** Collection Names */
-export const COLLECTIONS = ['N/A', 'User'] as const;
+export const COLLECTIONS = ['N/A', 'User', 'Note'] as const;

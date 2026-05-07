@@ -2,6 +2,7 @@ import type { Types } from 'mongoose';
 import type { HttpStatusCode, StatusCode } from 'nhb-toolbox/http-status/types';
 import type { COLLECTIONS, USER_ROLES } from '@/constants';
 import type { TLoginCredentials } from '@/modules/user/user.types';
+import type { Prettify } from 'nhb-toolbox/utils/types';
 
 export type ExceptionSignal = NodeJS.UncaughtExceptionOrigin | NodeJS.Signals;
 
@@ -16,6 +17,22 @@ export type TStatusCode = HttpStatusCode<'clientError' | 'serverError'>;
 export type TUserRole = (typeof USER_ROLES)[number];
 
 export type TEmail = TLoginCredentials['email'];
+
+/**
+ * Makes selected properties optional while keeping the rest required
+ * @remarks By default all properties are optional
+ */
+export type PropertyOptional<O, K extends keyof O = keyof O> = Prettify<
+	Omit<O, K> & Partial<Pick<O, K>>
+>;
+
+/**
+ * Makes selected properties required while keeping the rest unchanged
+ * @remarks By default all properties are required
+ */
+export type PropertyRequired<O, K extends keyof O = keyof O> = Prettify<
+	Omit<O, K> & Required<Pick<O, K>>
+>;
 
 export type SearchField<T> = {
 	[K in keyof T]: T[K] extends string | number ? K : never;

@@ -10,6 +10,7 @@ const userSchema = new Schema<IUserDoc>(
 	{
 		name: {
 			type: String,
+			required: true,
 			trim: true,
 		},
 		email: {
@@ -25,8 +26,8 @@ const userSchema = new Schema<IUserDoc>(
 		},
 		interests: {
 			type: [String],
-			required: true,
-			trim: true,
+			required: false,
+			default: [],
 		},
 		role: {
 			type: String,
