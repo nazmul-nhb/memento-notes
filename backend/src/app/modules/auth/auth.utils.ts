@@ -1,12 +1,12 @@
 import { pickFields } from 'nhb-toolbox';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
+import type { Maybe } from 'nhb-toolbox/types';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import configs from '@/configs';
 import type { IUserDoc } from '@/modules/user/user.types';
 import { safeUser } from '@/modules/user/user.utils';
-import { comparePassword, generateToken } from '@/utilities/authUtilities';
 import type { DecodedUser } from '@/types/interfaces';
-import type { Maybe } from 'nhb-toolbox/types';
+import { comparePassword, generateToken } from '@/utilities/authUtilities';
 
 /**
  * Process user login.

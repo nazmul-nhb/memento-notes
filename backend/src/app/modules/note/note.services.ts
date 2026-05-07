@@ -1,28 +1,33 @@
 import { STATUS_CODES } from 'nhb-toolbox/constants';
+import type { Maybe } from 'nhb-toolbox/types';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import { QueryBuilder } from '@/classes/QueryBuilder';
 import { Note } from '@/modules/note/note.model';
 import type { INote, TUpdateNote } from '@/modules/note/note.types';
+import type { DecodedUser } from '@/types/interfaces';
 
-const createNoteInDB = async (payload: INote) => {
-	const newNote = await Note.create(payload);
+const createNoteInDB = async (payload: INote, userId: Maybe<string>) => {
+	const newNote = await Note.create({ ...payload, user_id: userId });
 
 	return newNote;
 };
 
-const getAllNotesFromDB = async (query?: Record<string, unknown>) => {
-	const noteQuery = new QueryBuilder(Note.find(), query).sort();
-	// const notes = await Note.find({});
+const getAllNotesFromDB = async (user: Maybe<DecodedUser>, query?: Record<string, unknown>) => {
+	const noteQuery = new QueryBuilder(Note.find({ user_id: user?._id }), query)
+		.sort()
+		.paginate();
 
-	const notes = await noteQuery.modelQuery;
+	const notes = await noteQuery.modelQuery.populate('user_id', 'name email');
 
 	return notes;
 };
 
-const getSingleNoteFromDB = async (id: string) => {
-	const note_1 = await Note.findNoteById(id);
+const getAllNotesForAdminFromDB = async (query?: Record<string, unknown>) => {
+	const noteQuery = new QueryBuilder(Note.find(), query).sort().paginate();
 
-	return note_1;
+	const notes = await noteQuery.modelQuery.populate('user_id', 'name email');
+
+	return notes;
 };
 
 const updateNoteInDB = async (id: string, payload: TUpdateNote) => {
@@ -54,12 +59,14 @@ const deleteNoteFromDB = async (id: string) => {
 			'delete_note'
 		);
 	}
+
+	return result;
 };
 
 export const noteServices = {
 	createNoteInDB,
 	getAllNotesFromDB,
-	getSingleNoteFromDB,
+	getAllNotesForAdminFromDB,
 	updateNoteInDB,
 	deleteNoteFromDB,
 };

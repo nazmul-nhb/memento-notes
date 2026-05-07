@@ -69,7 +69,7 @@ userSchema.statics.validateUser = async function (email?: TEmail) {
 		);
 	}
 
-	const user: IUserDoc = await this.findOne({ email }).select('+password');
+	const user: IUserDoc = await this.findOne({ email }).select('+password -interests');
 
 	if (!user) {
 		throw new ErrorWithStatus(

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { Stylog } from 'nhb-toolbox/stylog';
 import configs from '@/configs';
+import { User } from '@/modules/user/user.model';
 
 /** * Connect to MongoDB using Mongoose. */
 export const connectDB = async (): Promise<void> => {
@@ -13,6 +14,8 @@ export const connectDB = async (): Promise<void> => {
 		await mongoose.connect(configs.mongoUri);
 
 		console.info(Stylog.cyan.toANSI('🔗 MongoDB is Connected!'));
+
+		await seedAdmin();
 
 		// Listen for established connection
 		mongoose.connection.on('connected', () => {
@@ -36,3 +39,28 @@ export const connectDB = async (): Promise<void> => {
 		}
 	}
 };
+
+async function seedAdmin() {
+	const admin = await User.findOne({ role: 'admin' });
+
+	const { seedAdminEMail, seedAdminPassword } = configs;
+
+	if (admin) return;
+
+	if (!seedAdminEMail || !seedAdminPassword) {
+		throw new Error('Admin credentials are not defined in the .env!');
+	}
+
+	const user = await User.create({
+		name: 'Memento Admin',
+		email: seedAdminEMail,
+		password: seedAdminPassword,
+		role: 'admin',
+	});
+
+	if (user) {
+		console.info(
+			Stylog.ansi16('greenBright').bold.toANSI('✅ Admin User Created Successfully!')
+		);
+	}
+}

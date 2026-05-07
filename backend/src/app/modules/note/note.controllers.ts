@@ -3,21 +3,21 @@ import catchAsync from '@/utilities/catchAsync';
 import sendResponse from '@/utilities/sendResponse';
 
 const createNote = catchAsync(async (req, res) => {
-	const newNote = await noteServices.createNoteInDB(req.body);
+	const newNote = await noteServices.createNoteInDB(req.body, req.user?._id);
 
 	sendResponse(res, 'Note', 'POST', newNote);
 });
 
-const getAllNotes = catchAsync(async (_req, res) => {
-	const notes = await noteServices.getAllNotesFromDB();
+const getAllNotes = catchAsync(async (req, res) => {
+	const notes = await noteServices.getAllNotesFromDB(req.user, req.query);
 
 	sendResponse(res, 'Note', 'GET', notes);
 });
 
-const getSingleNote = catchAsync(async (req, res) => {
-	const note = await noteServices.getSingleNoteFromDB(req?.params?.id);
+const getAllNotesForAdmin = catchAsync(async (req, res) => {
+	const notes = await noteServices.getAllNotesForAdminFromDB(req?.query);
 
-	sendResponse(res, 'Note', 'GET', note);
+	sendResponse(res, 'Note', 'GET', notes);
 });
 
 const updateNote = catchAsync(async (req, res) => {
@@ -27,15 +27,15 @@ const updateNote = catchAsync(async (req, res) => {
 });
 
 const deleteNote = catchAsync(async (req, res) => {
-	await noteServices.deleteNoteFromDB(req?.params?.id);
+	const result = await noteServices.deleteNoteFromDB(req?.params?.id);
 
-	sendResponse(res, 'Note', 'DELETE');
+	sendResponse(res, 'Note', 'DELETE', result);
 });
 
 export const noteControllers = {
 	createNote,
 	getAllNotes,
-	getSingleNote,
+	getAllNotesForAdmin,
 	updateNote,
 	deleteNote,
 };

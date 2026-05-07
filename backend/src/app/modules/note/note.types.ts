@@ -15,5 +15,5 @@ export interface INoteDoc extends INote, Document {
 export type TUpdateNote = Omit<Partial<INote>, 'user_id'>;
 
 export interface INoteModel extends Model<INoteDoc> {
-	findNoteById: (id: string) => Promise<INoteDoc>;
+	findNoteById: (id: string, path?: string) => Promise<INoteDoc>;
 }

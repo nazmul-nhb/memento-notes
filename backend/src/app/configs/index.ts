@@ -3,6 +3,7 @@ import type { StringValue } from 'ms';
 import { normalizeNumber } from 'nhb-toolbox';
 import type { LooseLiteral } from 'nhb-toolbox/utils/types';
 import path from 'path';
+import type { TEmail } from '@/types';
 
 dotenv.config({ path: path.join(process.cwd(), '.env'), quiet: true });
 
@@ -25,4 +26,9 @@ export default {
 	refreshSecret: process.env.JWT_REFRESH_SECRET as string,
 	/** * JWT Refresh Token expiry time. */
 	refreshExpireTime: process.env.JWT_REFRESH_EXPIRES_IN as StringValue,
+
+	/** * Email for the admin user to be seeded. */
+	seedAdminEMail: process.env.SEED_ADMIN_EMAIL as TEmail,
+	/** * Password for the admin user to be seeded. */
+	seedAdminPassword: process.env.SEED_ADMIN_PASS as string,
 };

@@ -1,6 +1,5 @@
 import { Model, type Query, type QueryFilter } from 'mongoose';
-import { normalizeNumber } from 'nhb-toolbox';
-import type { ExcludeField, NumericKeys, SearchField } from '@/types';
+import type { ExcludeField, SearchField } from '@/types';
 
 /**
  * @class QueryBuilder
@@ -84,77 +83,6 @@ export class QueryBuilder<T> {
 		sort_by[sortField] = sort_order === 'asc' ? 1 : -1;
 
 		this.modelQuery = this.modelQuery.sort(sort_by);
-
-		return this;
-	}
-
-	/**
-	 * Method to filter results based on a field's range (min & max values).
-	 * Ensures that only numeric fields are allowed.
-	 * @param field The numeric field to filter by range (e.g., "price").
-	 * @returns The current instance of QueryBuilder.
-	 */
-	getRange(field: NumericKeys<T> & keyof QueryFilter<T>) {
-		const min = normalizeNumber(this?.query?.min);
-		const max = normalizeNumber(this?.query?.max);
-
-		if (min != null || max != null) {
-			const rangeFilter: QueryFilter<T> = {};
-
-			if (min != null) {
-				rangeFilter[field] = {
-					...rangeFilter[field],
-					$gte: min,
-				};
-			}
-
-			if (max != null) {
-				rangeFilter[field] = {
-					...rangeFilter[field],
-					$lte: max,
-				};
-			}
-
-			this.modelQuery = this.modelQuery.find(rangeFilter);
-		}
-
-		return this;
-	}
-
-	/**
-	 * Adds a filter to the query based on a specific field and a corresponding value from the query parameters.
-	 * @param field The field to filter on.
-	 * @param valueKey The key in the query parameters to extract the filter value.
-	 * @returns The current instance of QueryBuilder.
-	 */
-	customFilter(field: keyof T, valueKey: string) {
-		const value = this?.query?.[valueKey] as string;
-
-		if (value) {
-			this.modelQuery = this.modelQuery.find({
-				[field]: value,
-			} as QueryFilter<T>);
-		}
-
-		return this;
-	}
-
-	/**
-	 * Fetches documents based on the provided Object IDs as array.
-	 * @returns The current instance of QueryBuilder.
-	 */
-	getDocumentsByIds() {
-		let ids: string[] = [];
-
-		if (typeof this?.query?.ids === 'string') {
-			ids = [this?.query?.ids];
-		} else if (Array.isArray(this?.query?.ids)) {
-			ids = this?.query?.ids as string[];
-		}
-
-		if (ids.length > 0) {
-			this.modelQuery = this.modelQuery.find({ _id: { $in: ids } });
-		}
 
 		return this;
 	}

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { USER_ROLES } from '@/constants';
+import { ADMIN_ROLES, USER_ROLES } from '@/constants';
 import authorizeUser from '@/middlewares/authorizeUser';
 import validateRequest from '@/middlewares/validateRequest';
 import { noteControllers } from '@/modules/note/note.controllers';
@@ -15,19 +15,9 @@ router.post(
 	noteControllers.createNote
 );
 
-router.get(
-	'/',
-	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('get_notes'),
-	noteControllers.getAllNotes
-);
+router.get('/', authorizeUser(...USER_ROLES), noteControllers.getAllNotes);
 
-router.get(
-	'/:id',
-	authorizeUser(...USER_ROLES),
-	checkNoteOwnership('get_note'),
-	noteControllers.getSingleNote
-);
+router.get('/admin', authorizeUser('admin'), noteControllers.getAllNotesForAdmin);
 
 router.patch(
 	'/:id',

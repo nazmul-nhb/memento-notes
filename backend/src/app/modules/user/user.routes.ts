@@ -10,22 +10,22 @@ const router = Router();
 router.post(
 	'/',
 	validateRequest(userValidations.creationSchema),
-	authorizeUser(...ADMIN_ROLES),
+	authorizeUser('admin'),
 	userControllers.createUser
 );
 
-router.get('/', authorizeUser(...ADMIN_ROLES), userControllers.getAllUsers);
+router.get('/', authorizeUser('admin'), userControllers.getAllUsers);
 
-// router.get('/:id', authorizeUser(...ADMIN_ROLES), userControllers.getSingleUser);
+// router.get('/:id', authorizeUser('admin'), userControllers.getSingleUser);
 
 router.patch(
 	'/:id',
 	validateRequest(userValidations.updateSchema),
-	authorizeUser(...ADMIN_ROLES),
+	authorizeUser('admin'),
 	userControllers.updateUser
 );
 
-router.delete('/:id', authorizeUser(...ADMIN_ROLES), userControllers.removeUser);
+router.delete('/:id', authorizeUser('admin'), userControllers.removeUser);
 
 router.get('/me', authorizeUser(...USER_ROLES), userControllers.getCurrentUser);
 

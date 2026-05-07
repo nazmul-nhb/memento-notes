@@ -1,8 +1,8 @@
 import type { Types } from 'mongoose';
 import type { HttpStatusCode, StatusCode } from 'nhb-toolbox/http-status/types';
+import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { COLLECTIONS, USER_ROLES } from '@/constants';
 import type { TLoginCredentials } from '@/modules/user/user.types';
-import type { Prettify } from 'nhb-toolbox/utils/types';
 
 export type ExceptionSignal = NodeJS.UncaughtExceptionOrigin | NodeJS.Signals;
 

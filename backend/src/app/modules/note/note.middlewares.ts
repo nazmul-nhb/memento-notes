@@ -15,7 +15,7 @@ import { areObjectIdsEqual } from '@/utilities/validateObjectId';
  */
 export function checkNoteOwnership(path: string) {
 	return catchAsync(async (req, _res, next) => {
-		const note = await Note.findNoteById(req.params.id);
+		const note = await Note.findNoteById(req.params.id, path);
 		const user = req.user;
 
 		if (!areObjectIdsEqual(note.user_id, user?._id) || !isAdmin(user)) {
