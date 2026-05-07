@@ -8,6 +8,7 @@ import { safeUser } from '@/modules/user/user.utils';
 import type { TEmail } from '@/types';
 import type { DecodedUser } from '@/types/interfaces';
 import { hashPassword } from '@/utilities/authUtilities';
+import { getQueryMeta } from '@/utilities/queryHelpers';
 import { validateObjectId } from '@/utilities/validateObjectId';
 
 /** * Create a new user in MongoDB `user` collection. */
@@ -19,9 +20,13 @@ const createUserInDB = async (payload: TUser) => {
 
 /** * Get all users from DB. */
 const getAllUsersFromDB = async (query?: Record<string, unknown>) => {
-	const userQuery = new QueryBuilder(User.find(), query).sort();
+	const userQuery = new QueryBuilder(User.find(), query).sort().paginate();
 
-	return await userQuery.modelQuery;
+	const meta = await getQueryMeta(User, userQuery.modelQuery, query);
+
+	const users = await userQuery.modelQuery;
+
+	return { meta, users };
 };
 
 /** * Get current user from DB. */

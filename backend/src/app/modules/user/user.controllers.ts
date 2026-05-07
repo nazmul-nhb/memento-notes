@@ -10,8 +10,8 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 /** * Get all users from DB. */
-const getAllUsers = catchAsync(async (_req, res) => {
-	const users = await userServices.getAllUsersFromDB();
+const getAllUsers = catchAsync(async (req, res) => {
+	const users = await userServices.getAllUsersFromDB(req.query);
 
 	sendResponse(res, 'User', 'GET', users);
 });

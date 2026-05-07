@@ -5,6 +5,7 @@ import { QueryBuilder } from '@/classes/QueryBuilder';
 import { Note } from '@/modules/note/note.model';
 import type { INote, TUpdateNote } from '@/modules/note/note.types';
 import type { DecodedUser } from '@/types/interfaces';
+import { getQueryMeta } from '@/utilities/queryHelpers';
 
 const createNoteInDB = async (payload: INote, userId: Maybe<string>) => {
 	const newNote = await Note.create({ ...payload, user_id: userId });
@@ -17,17 +18,21 @@ const getAllNotesFromDB = async (user: Maybe<DecodedUser>, query?: Record<string
 		.sort()
 		.paginate();
 
+	const meta = await getQueryMeta(Note, noteQuery.modelQuery, query);
+
 	const notes = await noteQuery.modelQuery.populate('user_id', 'name email');
 
-	return notes;
+	return { meta, notes };
 };
 
 const getAllNotesForAdminFromDB = async (query?: Record<string, unknown>) => {
 	const noteQuery = new QueryBuilder(Note.find(), query).sort().paginate();
 
+	const meta = await getQueryMeta(Note, noteQuery.modelQuery, query);
+
 	const notes = await noteQuery.modelQuery.populate('user_id', 'name email');
 
-	return notes;
+	return { meta, notes };
 };
 
 const updateNoteInDB = async (id: string, payload: TUpdateNote) => {
