@@ -1,5 +1,6 @@
 {
 	"js/ts.preferences.importModuleSpecifier": "non-relative",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"eslint.enable": false,
 	"prettier.enable": false,
 	"biome.enabled": true,
