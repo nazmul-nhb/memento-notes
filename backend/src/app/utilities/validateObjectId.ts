@@ -1,5 +1,6 @@
-import { isValidObjectId, type Types } from 'mongoose';
+import { isValidObjectId, Types } from 'mongoose';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
+import type { Maybe } from 'nhb-toolbox/types';
 import z from 'zod';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import type { TCollection } from '@/types';
@@ -30,8 +31,8 @@ export const validateObjectId = (
  * @param collection Collection name to generate relevant error message.
  * @returns Zod schema for ObjectId validation.
  */
-export const objectIdSchema = (collection: Lowercase<Exclude<TCollection, 'N/A'>>) =>
-	z.string().check((val) => {
+export const objectIdSchema = (collection: Lowercase<Exclude<TCollection, 'N/A'>>) => {
+	return z.string().check((val) => {
 		if (!isValidObjectId(val.value)) {
 			val.issues.push({
 				code: 'custom',
@@ -40,3 +41,16 @@ export const objectIdSchema = (collection: Lowercase<Exclude<TCollection, 'N/A'>
 			});
 		}
 	});
+};
+
+type MayBeObjectId = Maybe<Types.ObjectId | string>;
+
+/**
+ * * Utility function to compare two `ObjectId` values.
+ * @param id1 First `ObjectId` value.
+ * @param id2 Second `ObjectId` value.
+ * @returns Boolean indicating whether the `ObjectId` values are equal.
+ */
+export function areObjectIdsEqual(id1: MayBeObjectId, id2: MayBeObjectId) {
+	return new Types.ObjectId(id1).equals(id2);
+}

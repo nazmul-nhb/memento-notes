@@ -51,6 +51,7 @@ export interface IRoute {
 }
 
 export interface DecodedUser extends JwtPayload {
+	_id: string;
 	email: TEmail;
 	role: TUserRole;
 }

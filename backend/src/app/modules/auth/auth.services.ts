@@ -42,7 +42,7 @@ const refreshToken = async (token: string): Promise<{ token: string }> => {
 
 	// * Create token and send to the client.
 	const accessToken = generateToken(
-		pickFields(user, ['email', 'role']),
+		pickFields(user, ['_id', 'email', 'role']),
 		configs.accessSecret,
 		configs.accessExpireTime
 	);

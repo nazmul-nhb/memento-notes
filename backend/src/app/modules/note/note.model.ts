@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import type { INoteDoc, INoteModel } from '@/modules/note/note.types';
+import { validateObjectId } from '@/utilities/validateObjectId';
 
 const noteSchema = new Schema<INoteDoc>(
 	{
@@ -30,15 +31,14 @@ const noteSchema = new Schema<INoteDoc>(
 	}
 );
 
+// * User notes listing (pagination)
+noteSchema.index({ user_id: 'asc', created_at: 'desc' });
+
+// * Direct fetch by user + note
+noteSchema.index({ _id: 'asc', user_id: 'asc' });
+
 noteSchema.statics.findNoteById = async function (id: string) {
-	if (!id) {
-		throw new ErrorWithStatus(
-			'Bad Request',
-			'Please provide a valid ID!',
-			STATUS_CODES.BAD_REQUEST,
-			'note'
-		);
-	}
+	validateObjectId(id, 'note', 'get_note');
 
 	const note = await this.findById(id);
 
@@ -47,7 +47,7 @@ noteSchema.statics.findNoteById = async function (id: string) {
 			'Not Found Error',
 			`No note found with ID ${id}!`,
 			STATUS_CODES.NOT_FOUND,
-			'note'
+			'get_note'
 		);
 	}
 

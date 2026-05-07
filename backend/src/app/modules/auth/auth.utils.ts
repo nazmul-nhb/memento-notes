@@ -1,8 +1,12 @@
+import { pickFields } from 'nhb-toolbox';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import configs from '@/configs';
-import type { IPlainUser, IUserDoc } from '@/modules/user/user.types';
+import type { IUserDoc } from '@/modules/user/user.types';
+import { safeUser } from '@/modules/user/user.utils';
 import { comparePassword, generateToken } from '@/utilities/authUtilities';
+import type { DecodedUser } from '@/types/interfaces';
+import type { Maybe } from 'nhb-toolbox/types';
 
 /**
  * Process user login.
@@ -24,10 +28,7 @@ export const processLogin = async <T extends IUserDoc>(password: string, user: T
 	}
 
 	// * Create tokens and send to the client.
-	const jwtPayload = {
-		email: user.email,
-		role: user.role,
-	};
+	const jwtPayload = pickFields(user, ['_id', 'email', 'role']);
 
 	const accessToken = generateToken(
 		jwtPayload,
@@ -41,11 +42,13 @@ export const processLogin = async <T extends IUserDoc>(password: string, user: T
 		configs.refreshExpireTime
 	);
 
-	const { password: _, __v, ...userInfo } = user.toObject<IPlainUser>();
-
 	return {
 		access_token: accessToken,
 		refresh_token: refreshToken,
-		user: userInfo,
+		user: safeUser(user),
 	};
 };
+
+export function isAdmin<T extends DecodedUser>(user: Maybe<T>): user is T & { role: 'admin' } {
+	return user?.role === 'admin';
+}
