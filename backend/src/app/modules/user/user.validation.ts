@@ -5,12 +5,12 @@ import { authValidations } from '@/modules/auth/auth.validation';
 /** Validation Schema for Creating new User */
 const creationSchema = authValidations.registerSchema
 	.extend({
-		role: z.enum(USER_ROLES).optional().default('user'),
-		interests: z.array(z.string({ error: 'Interest is required!' }).trim()),
+		role: z.enum(USER_ROLES).optional(),
+		interests: z.array(z.string({ error: 'Interest is required!' }).trim()).optional(),
 	})
 	.strict();
 
-const updateSchema = creationSchema.pick({ name: true, interests: true }).partial();
+const updateSchema = creationSchema.partial();
 
 /** User Validation Schema */
 export const userValidations = { creationSchema, updateSchema };

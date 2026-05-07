@@ -33,16 +33,8 @@ const refreshToken = catchAsync(async (req, res) => {
 	sendResponse(res, 'N/A', 'OK', token, 'Successfully retrieved new access token!');
 });
 
-/** * Get current logged in user. */
-const getCurrentUser = catchAsync(async (req, res) => {
-	const user = await authServices.getCurrentUserFromDB(req.user);
-
-	sendResponse(res, 'User', 'GET', user, 'Successfully retrieved user profile!');
-});
-
 export const authControllers = {
 	registerUser,
 	loginUser,
 	refreshToken,
-	getCurrentUser,
 };
