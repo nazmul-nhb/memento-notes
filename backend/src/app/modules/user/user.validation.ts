@@ -1,27 +1,16 @@
 import { z } from 'zod';
+import { USER_ROLES } from '@/constants';
 import { authValidations } from '@/modules/auth/auth.validation';
 
 /** Validation Schema for Creating new User */
-const creationSchema = authValidations.loginSchema
+const creationSchema = authValidations.registerSchema
 	.extend({
-		first_name: z.string({ error: 'First name is required!' }).trim(),
-		last_name: z.string({ error: 'Last name is required!' }).trim(),
-		confirm_password: z
-			.string({ error: 'Password is required!' })
-			.trim()
-			.min(6, {
-				message: 'Password must be at least 6 characters long!',
-			})
-			.max(56, {
-				message: 'Password cannot be more than 56 characters!',
-			}),
+		role: z.enum(USER_ROLES).optional().default('user'),
+		interests: z.array(z.string({ error: 'Interest is required!' }).trim()),
 	})
-	.refine((schema) => schema.password === schema.confirm_password, {
-		path: ['confirm_password'],
-		message: 'Passwords do not match!',
-	})
-	.strict()
-	.transform(({ confirm_password: _, ...rest }) => rest);
+	.strict();
+
+const updateSchema = creationSchema.pick({ name: true, interests: true }).partial();
 
 /** User Validation Schema */
-export const userValidations = { creationSchema };
+export const userValidations = { creationSchema, updateSchema };

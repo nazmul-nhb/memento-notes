@@ -8,23 +8,11 @@ import { hashPassword } from '@/utilities/authUtilities';
 
 const userSchema = new Schema<IUserDoc>(
 	{
-		user_name: {
+		name: {
 			type: String,
 			trim: true,
-			unique: true,
 		},
 		email: {
-			type: String,
-			required: true,
-			trim: true,
-			unique: true,
-		},
-		first_name: {
-			type: String,
-			required: true,
-			trim: true,
-		},
-		last_name: {
 			type: String,
 			required: true,
 			trim: true,
@@ -35,14 +23,15 @@ const userSchema = new Schema<IUserDoc>(
 			trim: true,
 			select: false,
 		},
+		interests: {
+			type: [String],
+			required: true,
+			trim: true,
+		},
 		role: {
 			type: String,
 			enum: USER_ROLES,
 			default: 'user',
-		},
-		is_active: {
-			type: Boolean,
-			default: true,
 		},
 	},
 	{
@@ -54,18 +43,17 @@ const userSchema = new Schema<IUserDoc>(
 	}
 );
 
-// * Hash password and create username before saving the user in DB.
+// * Unique login + fast lookup
+userSchema.index({ email: 'asc' }, { unique: true });
+
+// * Admin listing users with pagination (sorted by created_at)
+userSchema.index({ created_at: 'desc' });
+
+// * Aggregation: group by interests
+userSchema.index({ interests: 'asc' });
+
+// * Hash password before saving the user in DB.
 userSchema.pre('save', async function () {
-	const base = this.first_name?.toLowerCase()?.replace(/\s+/g, '_');
-	let userName = base;
-	let suffix = 0;
-
-	while (await User.exists({ user_name: userName })) {
-		suffix += 1;
-		userName = `${base}_${suffix}`;
-	}
-
-	this.user_name = userName;
 	this.password = await hashPassword(this.password);
 });
 
@@ -91,16 +79,7 @@ userSchema.statics.validateUser = async function (email?: TEmail) {
 		);
 	}
 
-	if (!user.is_active) {
-		throw new ErrorWithStatus(
-			'Authentication Error',
-			`User with email ${email} is not active!`,
-			STATUS_CODES.FORBIDDEN,
-			'user'
-		);
-	}
-
 	return user;
 };
 
-export const User = model<IUserDoc, IUserModel>('User', userSchema);
+export const User = model<IUserDoc, IUserModel>('Users', userSchema);

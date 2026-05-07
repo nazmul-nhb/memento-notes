@@ -5,7 +5,7 @@ import { Chronos, roundNumber } from 'nhb-toolbox';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import configs from '@/configs';
-import type { IUser } from '@/modules/user/user.types';
+import type { TUser } from '@/modules/user/user.types';
 import type { DecodedUser } from '@/types/interfaces';
 
 /**
@@ -56,7 +56,7 @@ export const comparePassword = async (
  * @returns
  */
 export const generateToken = (
-	payload: Pick<IUser, 'email' | 'role'>,
+	payload: Pick<TUser, 'email' | 'role'>,
 	secret: string,
 	expiresIn: StringValue
 ): string => {

@@ -178,7 +178,8 @@
 						"noUnreachableSuper": "off"
 					},
 					"style": {
-						"useConst": "error"
+						"useConst": "error",
+						"useImportType": "warn"
 					},
 					"suspicious": {
 						"noClassAssign": "off",

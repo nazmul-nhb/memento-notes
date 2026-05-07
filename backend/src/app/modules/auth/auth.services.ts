@@ -2,7 +2,12 @@ import { pickFields } from 'nhb-toolbox';
 import configs from '@/configs';
 import { processLogin } from '@/modules/auth/auth.utils';
 import { User } from '@/modules/user/user.model';
-import type { ILoginCredentials, IPlainUser, ITokens, IUser } from '@/modules/user/user.types';
+import type {
+	IPlainUser,
+	ITokens,
+	TLoginCredentials,
+	TUserRegisterInput,
+} from '@/modules/user/user.types';
 import type { DecodedUser } from '@/types/interfaces';
 import { generateToken, verifyToken } from '@/utilities/authUtilities';
 
@@ -11,10 +16,10 @@ import { generateToken, verifyToken } from '@/utilities/authUtilities';
  * @param payload User data from `req.body`.
  * @returns User object from MongoDB.
  */
-const registerUserInDB = async (payload: IUser) => {
+const registerUserInDB = async (payload: TUserRegisterInput) => {
 	const newUser = await User.create(payload);
 
-	return pickFields(newUser, ['_id', 'user_name', 'email']);
+	return pickFields(newUser, ['_id', 'name', 'email', 'role', 'created_at']);
 };
 
 /**
@@ -22,7 +27,7 @@ const registerUserInDB = async (payload: IUser) => {
  * @param payload Login credentials (`email` and `password`).
  * @returns Tokens (access and refresh) along with the user info.
  */
-const loginUser = async (payload: ILoginCredentials): Promise<ITokens> => {
+const loginUser = async (payload: TLoginCredentials): Promise<ITokens> => {
 	// * Validate and extract user from DB.
 	const user = await User.validateUser(payload.email);
 

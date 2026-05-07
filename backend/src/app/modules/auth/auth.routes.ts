@@ -4,13 +4,12 @@ import authorizeUser from '@/middlewares/authorizeUser';
 import validateRequest from '@/middlewares/validateRequest';
 import { authControllers } from '@/modules/auth/auth.controllers';
 import { authValidations } from '@/modules/auth/auth.validation';
-import { userValidations } from '@/modules/user/user.validation';
 
 const router = Router();
 
 router.post(
 	'/register',
-	validateRequest(userValidations.creationSchema),
+	validateRequest(authValidations.registerSchema),
 	authControllers.registerUser
 );
 

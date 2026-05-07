@@ -1,18 +1,14 @@
 import type { Document, Model, Types } from 'mongoose';
-import type { TEmail, TUserRole } from '@/types';
+import type { z } from 'zod';
+import type { authValidations } from '@/modules/auth/auth.validation';
+import { userValidations } from '@/modules/user/user.validation';
+import type { TEmail } from '@/types';
 
-export interface IUser extends ILoginCredentials {
-	first_name: string;
-	last_name: string;
-	role: TUserRole;
-	user_name: string;
-	is_active: boolean;
-}
+export type TUser = z.infer<typeof userValidations.creationSchema>;
 
-export interface ILoginCredentials {
-	email: TEmail;
-	password: string;
-}
+export type TUserRegisterInput = z.infer<typeof authValidations.registerSchema>;
+
+export type TLoginCredentials = z.infer<typeof authValidations.loginSchema>;
 
 export interface ITokens {
 	access_token: string;
@@ -20,7 +16,7 @@ export interface ITokens {
 	user: ICurrentUser;
 }
 
-export interface IPlainUser extends IUser {
+export interface IPlainUser extends TUser {
 	_id: Types.ObjectId;
 	created_at: string;
 	updated_at: string;
@@ -34,7 +30,7 @@ export interface IUserModel extends Model<IUserDoc> {
 	validateUser(email?: TEmail): Promise<IUserDoc>;
 }
 
-export interface ICurrentUser extends Omit<IUser, 'password'> {
+export interface ICurrentUser extends Omit<TUser, 'password'> {
 	_id: Types.ObjectId;
 	created_at: string;
 	updated_at: string;

@@ -36,6 +36,9 @@
                     }
                 }
             },
+            "style": {
+                "useImportType": "warn"
+            },
             "correctness": {
                 "recommended": true,
                 "useExhaustiveDependencies": "warn",

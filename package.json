@@ -1,51 +1,53 @@
 {
-	"name": "memento-notes",
-	"version": "1.0.0",
-	"description": "A Simple, Fast and Secure Note-Taking App",
-	"scripts": {
-		"install:all": "pnpm install && pnpm --dir backend install && pnpm --dir frontend install",
-		"dev": "concurrently \"pnpm dev:b\" \"pnpm dev:f\"",
-		"dev:b": "pnpm --dir backend dev",
-		"dev:f": "pnpm --dir frontend dev",
-		"build": "concurrently \"pnpm build:b\" \"pnpm build:f\"",
-		"build:b": "pnpm --dir backend build",
-		"build:f": "pnpm --dir frontend build",
-		"start": "concurrently \"pnpm start:b\" \"pnpm start:f\"",
-		"start:b": "pnpm --dir backend start",
-		"start:f": "pnpm --dir frontend start",
-		"format": "concurrently \"pnpm format:b\" \"pnpm format:f\"",
-		"format:b": "pnpm --dir backend format",
-		"format:f": "pnpm --dir frontend format",
-		"lint": "concurrently \"pnpm lint:b\" \"pnpm lint:f\"",
-		"lint:b": "pnpm --dir backend lint",
-		"lint:f": "pnpm --dir frontend lint",
-		"fix": "concurrently \"pnpm fix:b\" \"pnpm fix:f\"",
-		"fix:b": "pnpm --dir backend fix",
-		"fix:f": "pnpm --dir frontend fix",
-		"typecheck": "concurrently \"pnpm typecheck:b\" \"pnpm typecheck:f\"",
-		"typecheck:b": "pnpm --dir backend typecheck",
-		"typecheck:f": "pnpm --dir frontend typecheck",
-		"module": "pnpm --dir backend module",
-		"commit": "nhb-commit"
-	},
-	"keywords": [
-		"note-taking",
-		"express",
-		"typescript",
-		"mongoose",
-		"react",
-		"tailwind-css"
-	],
-	"author": {
-		"name": "Nazmul Hassan",
-		"email": "nazmulnhb@gmail.com",
-		"url": "https://nazmul-nhb.dev"
-	},
-	"license": "ISC",
-	"packageManager": "pnpm@10.33.2",
-	"devDependencies": {
-		"@biomejs/biome": "^2.4.14",
-		"concurrently": "^9.2.1",
-		"nhb-scripts": "^1.9.2"
-	}
+  "name": "memento-notes",
+  "version": "1.0.1",
+  "description": "A Simple, Fast and Secure Note-Taking App",
+  "scripts": {
+    "install:all": "pnpm install && pnpm --dir backend install && pnpm --dir frontend install",
+    "wait": "wait-on tcp:4242",
+    "dev": "concurrently \"pnpm dev:b\" \"pnpm wait && pnpm dev:f\"",
+    "dev:b": "pnpm --dir backend dev",
+    "dev:f": "pnpm --dir frontend dev",
+    "build": "concurrently \"pnpm build:b\" \"pnpm wait && pnpm build:f\"",
+    "build:b": "pnpm --dir backend build",
+    "build:f": "pnpm --dir frontend build",
+    "start": "concurrently \"pnpm start:b\" \"pnpm wait && pnpm start:f\"",
+    "start:b": "pnpm --dir backend start",
+    "start:f": "pnpm --dir frontend start",
+    "format": "concurrently \"pnpm format:b\" \"pnpm format:f\"",
+    "format:b": "pnpm --dir backend format",
+    "format:f": "pnpm --dir frontend format",
+    "lint": "concurrently \"pnpm lint:b\" \"pnpm lint:f\"",
+    "lint:b": "pnpm --dir backend lint",
+    "lint:f": "pnpm --dir frontend lint",
+    "fix": "concurrently \"pnpm fix:b\" \"pnpm fix:f\"",
+    "fix:b": "pnpm --dir backend fix",
+    "fix:f": "pnpm --dir frontend fix",
+    "typecheck": "concurrently \"pnpm typecheck:b\" \"pnpm typecheck:f\"",
+    "typecheck:b": "pnpm --dir backend typecheck",
+    "typecheck:f": "pnpm --dir frontend typecheck",
+    "module": "pnpm --dir backend module",
+    "commit": "nhb-commit"
+  },
+  "keywords": [
+    "note-taking",
+    "express",
+    "typescript",
+    "mongoose",
+    "react",
+    "tailwind-css"
+  ],
+  "author": {
+    "name": "Nazmul Hassan",
+    "email": "nazmulnhb@gmail.com",
+    "url": "https://nazmul-nhb.dev"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.2",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.14",
+    "concurrently": "^9.2.1",
+    "nhb-scripts": "^1.9.2",
+    "wait-on": "^9.0.5"
+  }
 }

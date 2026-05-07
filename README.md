@@ -37,6 +37,8 @@ SALT_ROUNDS=your_salt_rounds
 
 #Optional
 PORT=your_port #default is `4242`
+
+# If the PORT is changed from `4242` to something else, update the `wait` script in the root `package.json`: "wait": "wait-on tcp:<port>"
 ```
 
 ### Installation

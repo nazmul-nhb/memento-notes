@@ -6,7 +6,7 @@ import configs from '@/configs';
 export const connectDB = async (): Promise<void> => {
 	try {
 		// Throw error if there is no connection string
-		if (!configs.mongoUri) {
+		if (!configs?.mongoUri) {
 			throw new Error('MongoDB URI is Not Defined!');
 		}
 

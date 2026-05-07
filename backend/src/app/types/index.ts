@@ -1,7 +1,7 @@
 import type { Types } from 'mongoose';
 import type { HttpStatusCode, StatusCode } from 'nhb-toolbox/http-status/types';
-import type { Branded } from 'nhb-toolbox/types';
 import type { COLLECTIONS, USER_ROLES } from '@/constants';
+import type { TLoginCredentials } from '@/modules/user/user.types';
 
 export type ExceptionSignal = NodeJS.UncaughtExceptionOrigin | NodeJS.Signals;
 
@@ -15,7 +15,7 @@ export type TStatusCode = HttpStatusCode<'clientError' | 'serverError'>;
 
 export type TUserRole = (typeof USER_ROLES)[number];
 
-export type TEmail = Branded<string, 'email'>;
+export type TEmail = TLoginCredentials['email'];
 
 export type SearchField<T> = {
 	[K in keyof T]: T[K] extends string | number ? K : never;
