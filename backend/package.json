@@ -1,63 +1,57 @@
 {
-  "name": "memento-notes-backend",
-  "version": "1.0.0",
-  "description": "Express TypeScript Mongoose (MongoDB) Server",
-  "scripts": {
-    "dev": "nodemon",
-    "start": "node dist/server.js",
-    "deploy": "nhb-build && vercel --prod",
-    "build": "nhb-build",
-    "lint": "biome lint --diagnostic-level=error",
-    "fix": "biome check --write --diagnostic-level=error",
-    "format": "biome format --write --diagnostic-level=error",
-    "commit": "nhb-commit",
-    "count": "nhb-count",
-    "delete": "nhb-delete",
-    "secret": "node scripts/generateSecret.mjs",
-    "typecheck": "tsc --noEmit",
-    "module": "nhb-module -t express-mongoose-zod -d src/app/modules"
-  },
-  "author": {
-    "name": "Nazmul Hassan",
-    "email": "nazmulnhb@gmail.com",
-    "url": "https://nazmul-nhb.dev"
-  },
-  "license": "ISC",
-  "keywords": [
-    "backend",
-    "server",
-    "express",
-    "typescript",
-    "mongoose"
-  ],
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.6.1",
-    "nhb-toolbox": "^4.30.1",
-    "serve-favicon": "^2.5.1",
-    "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.4.14",
-    "@types/bcrypt": "^6.0.0",
-    "@types/cookie-parser": "^1.4.10",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/ms": "^2.1.0",
-    "@types/node": "^25.6.0",
-    "@types/serve-favicon": "^2.5.7",
-    "nhb-scripts": "^1.9.2",
-    "nodemon": "^3.1.14",
-    "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.17",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^6.0.3",
-    "vercel": "^53.2.0"
-  }
+	"name": "memento-notes-backend",
+	"version": "1.0.0",
+	"description": "Express TypeScript Mongoose (MongoDB) Server",
+	"scripts": {
+		"dev": "nodemon",
+		"start": "node dist/server.js",
+		"deploy": "nhb-build && vercel --prod",
+		"build": "nhb-build",
+		"lint": "biome lint --diagnostic-level=error",
+		"fix": "biome check --write --diagnostic-level=error",
+		"format": "biome format --write --diagnostic-level=error",
+		"commit": "nhb-commit",
+		"count": "nhb-count",
+		"delete": "nhb-delete",
+		"secret": "node scripts/generateSecret.mjs",
+		"typecheck": "tsc --noEmit",
+		"module": "nhb-module -t express-mongoose-zod -d src/app/modules"
+	},
+	"author": {
+		"name": "Nazmul Hassan",
+		"email": "nazmulnhb@gmail.com",
+		"url": "https://nazmul-nhb.dev"
+	},
+	"license": "ISC",
+	"keywords": ["backend", "server", "express", "typescript", "mongoose"],
+	"dependencies": {
+		"bcrypt": "^6.0.0",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.6",
+		"dotenv": "^17.4.2",
+		"express": "^5.2.1",
+		"jsonwebtoken": "^9.0.3",
+		"mongoose": "^9.6.1",
+		"nhb-toolbox": "^4.30.1",
+		"serve-favicon": "^2.5.1",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.14",
+		"@types/bcrypt": "^6.0.0",
+		"@types/cookie-parser": "^1.4.10",
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.6",
+		"@types/jsonwebtoken": "^9.0.10",
+		"@types/ms": "^2.1.0",
+		"@types/node": "^25.6.0",
+		"@types/serve-favicon": "^2.5.7",
+		"nhb-scripts": "^1.9.2",
+		"nodemon": "^3.1.14",
+		"ts-node": "^10.9.2",
+		"tsc-alias": "^1.8.17",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "^6.0.3",
+		"vercel": "^53.2.0"
+	}
 }
