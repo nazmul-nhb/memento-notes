@@ -19,6 +19,7 @@ export function LoginForm({ onSubmit, isLoading, error }: LoginFormProps) {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm<LoginFormValues>({
 		// @ts-ignore
@@ -76,6 +77,29 @@ export function LoginForm({ onSubmit, isLoading, error }: LoginFormProps) {
 						{errors.password.message}
 					</p>
 				)}
+			</div>
+
+			<div className="flex items-center space-x-2 pt-1">
+				<input
+					type="checkbox"
+					id="use-admin-credentials"
+					className="size-4 cursor-pointer rounded border-white/20 bg-white/5 text-violet-600 focus:ring-violet-600 focus:ring-offset-background"
+					onChange={(e) => {
+						if (e.target.checked) {
+							setValue('email', 'admin@memento.com', { shouldValidate: true });
+							setValue('password', '12345678', { shouldValidate: true });
+						} else {
+							setValue('email', '', { shouldValidate: true });
+							setValue('password', '', { shouldValidate: true });
+						}
+					}}
+				/>
+				<label
+					htmlFor="use-admin-credentials"
+					className="cursor-pointer text-sm font-medium leading-none text-muted-foreground select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Fill demo admin credentials
+				</label>
 			</div>
 
 			<Button
