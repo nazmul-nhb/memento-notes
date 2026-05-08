@@ -30,7 +30,7 @@ export function UserForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 		reset,
 		formState: { errors, dirtyFields },
 	} = useForm<UserFormValues>({
-		// @ts-expect-error type incompatibility with zod v4 and hookform resolver
+		// @ts-ignore
 		resolver: zodResolver(mode === 'create' ? userCreationSchema : userUpdateSchema),
 		defaultValues: {
 			name: '',
@@ -105,7 +105,7 @@ export function UserForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 	};
 
 	return (
-		// @ts-expect-error type incompatibility with zod v4 and hookform resolver
+		// @ts-ignore
 		<form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
 			<div className="space-y-2">
 				<Label htmlFor="user-name">Name</Label>

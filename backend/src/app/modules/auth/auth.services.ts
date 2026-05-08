@@ -2,7 +2,11 @@ import { pickFields } from 'nhb-toolbox';
 import configs from '@/configs';
 import { processLogin } from '@/modules/auth/auth.utils';
 import { User } from '@/modules/user/user.model';
-import type { ITokens, TLoginCredentials, TUserRegisterInput } from '@/modules/user/user.types';
+import type {
+	IPlainUser,
+	TLoginCredentials,
+	TUserRegisterInput,
+} from '@/modules/user/user.types';
 import { generateToken, verifyToken } from '@/utilities/authUtilities';
 
 /**
@@ -21,7 +25,7 @@ const registerUserInDB = async (payload: TUserRegisterInput) => {
  * @param payload Login credentials (`email` and `password`).
  * @returns Tokens (access and refresh) along with the user info.
  */
-const loginUser = async (payload: TLoginCredentials): Promise<ITokens> => {
+const loginUser = async (payload: TLoginCredentials) => {
 	// * Validate and extract user from DB.
 	const user = await User.validateUser(payload.email);
 
@@ -42,7 +46,7 @@ const refreshToken = async (token: string): Promise<{ token: string }> => {
 
 	// * Create token and send to the client.
 	const accessToken = generateToken(
-		pickFields(user, ['_id', 'email', 'role']),
+		pickFields(user as unknown as IPlainUser, ['_id', 'email', 'role']),
 		configs.accessSecret,
 		configs.accessExpireTime
 	);

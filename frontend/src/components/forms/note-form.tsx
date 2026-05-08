@@ -26,7 +26,7 @@ export function NoteForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 		reset,
 		formState: { errors, dirtyFields },
 	} = useForm<NoteFormValues>({
-		// @ts-expect-error type incompatibility with zod v4 and hookform resolver
+		// @ts-ignore
 		resolver: zodResolver(mode === 'edit' ? noteUpdateSchema : noteCreationSchema),
 		defaultValues: {
 			title: '',
@@ -58,7 +58,7 @@ export function NoteForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 	};
 
 	return (
-		// @ts-expect-error type incompatibility with zod v4 and hookform resolver
+		// @ts-ignore
 		<form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
 			<div className="space-y-2">
 				<Label htmlFor="note-title">Title</Label>

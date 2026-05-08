@@ -22,7 +22,7 @@ export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) 
 		handleSubmit,
 		formState: { errors },
 	} = useForm<RegisterFormValues>({
-		// @ts-expect-error type incompatibility with zod v4 and hookform resolver
+		// @ts-ignore
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
 			name: '',

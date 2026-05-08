@@ -4,3 +4,4 @@ dist
 __*.*
 
 .estimator
+.vercel

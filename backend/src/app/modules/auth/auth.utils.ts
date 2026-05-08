@@ -3,7 +3,7 @@ import { STATUS_CODES } from 'nhb-toolbox/constants';
 import type { Maybe } from 'nhb-toolbox/types';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import configs from '@/configs';
-import type { IUserDoc } from '@/modules/user/user.types';
+import type { IPlainUser, IUserDoc } from '@/modules/user/user.types';
 import { safeUser } from '@/modules/user/user.utils';
 import type { DecodedUser } from '@/types/interfaces';
 import { comparePassword, generateToken } from '@/utilities/authUtilities';
@@ -28,7 +28,7 @@ export const processLogin = async <T extends IUserDoc>(password: string, user: T
 	}
 
 	// * Create tokens and send to the client.
-	const jwtPayload = pickFields(user, ['_id', 'email', 'role']);
+	const jwtPayload = pickFields(user as unknown as IPlainUser, ['_id', 'email', 'role']);
 
 	const accessToken = generateToken(
 		jwtPayload,
