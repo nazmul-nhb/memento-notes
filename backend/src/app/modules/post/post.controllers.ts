@@ -20,12 +20,6 @@ const getSinglePost = catchAsync(async (req, res) => {
 	sendResponse(res, 'Post', 'GET', post);
 });
 
-const getSpecificUserPosts = catchAsync(async (req, res) => {
-	const posts = await postServices.getSpecificUserPostsFromDB(req?.params?.id);
-
-	sendResponse(res, 'Post', 'GET', posts);
-});
-
 const updatePost = catchAsync(async (req, res) => {
 	const post = await postServices.updatePostInDB(req?.params?.id, req?.body);
 
@@ -42,7 +36,6 @@ export const postControllers = {
 	createPost,
 	getAllPosts,
 	getSinglePost,
-	getSpecificUserPosts,
 	updatePost,
 	deletePost,
 };

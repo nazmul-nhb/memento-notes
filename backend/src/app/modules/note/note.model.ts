@@ -34,8 +34,8 @@ const noteSchema = new Schema<INoteDoc>(
 // * User notes listing (pagination)
 noteSchema.index({ user_id: 'asc', created_at: 'desc' });
 
-// * Direct fetch by user + note
-noteSchema.index({ _id: 'asc', user_id: 'asc' });
+// * Direct fetch by admin with pagination + sorted by created_at for performance
+noteSchema.index({ created_at: 'desc' });
 
 noteSchema.statics.findNoteById = async function (id: string, path?: string) {
 	validateObjectId(id, 'note', path || 'GET: /notes/:id');

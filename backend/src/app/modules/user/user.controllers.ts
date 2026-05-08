@@ -43,10 +43,16 @@ const removeUser = catchAsync(async (req, res) => {
 	sendResponse(res, 'User', 'DELETE', result);
 });
 
-const groupUsersByInterest = catchAsync(async (_req, res) => {
-	const users = await userServices.groupUsersByInterestFromDB();
+const groupUsersByInterest = catchAsync(async (req, res) => {
+	const users = await userServices.groupUsersByInterestFromDB(req?.query?.interest as string);
 
 	sendResponse(res, 'User', 'GET', users);
+});
+
+const getSpecificUserPosts = catchAsync(async (req, res) => {
+	const posts = await userServices.getSpecificUserPostsFromDB(req?.params?.id);
+
+	sendResponse(res, 'Post', 'GET', posts);
 });
 
 export const userControllers = {
@@ -57,4 +63,5 @@ export const userControllers = {
 	updateUser,
 	removeUser,
 	groupUsersByInterest,
+	getSpecificUserPosts,
 };

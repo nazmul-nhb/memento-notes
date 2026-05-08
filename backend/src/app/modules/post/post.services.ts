@@ -30,28 +30,6 @@ const getSinglePostFromDB = async (id: string) => {
 	return post;
 };
 
-const getSpecificUserPostsFromDB = async (userId: string) => {
-	// ! COuld have done it simply using Post.find() method
-	// const postQuery = new QueryBuilder(Post.find({ user_id: userId }), query).sort().paginate();
-
-	const [userWithPosts] = await User.aggregate([
-		{
-			$match: { _id: new Types.ObjectId(userId) },
-		},
-		{
-			$lookup: {
-				from: 'posts',
-				localField: '_id',
-				foreignField: 'user_id',
-				as: 'posts',
-			},
-		},
-		{ $project: { password: 0, interests: 0, posts: { user_id: 0 } } },
-	]);
-
-	return userWithPosts;
-};
-
 const updatePostInDB = async (id: string, payload: Partial<IPost>) => {
 	const updatedPost = await Post.findOneAndUpdate({ _id: id }, payload, {
 		runValidators: true,
@@ -89,7 +67,6 @@ export const postServices = {
 	createPostInDB,
 	getAllPostsFromDB,
 	getSinglePostFromDB,
-	getSpecificUserPostsFromDB,
 	updatePostInDB,
 	deletePostFromDB,
 };

@@ -29,6 +29,8 @@ router.delete('/:id', authorizeUser('admin'), userControllers.removeUser);
 
 router.get('/me', authorizeUser(...USER_ROLES), userControllers.getCurrentUser);
 
-router.get('/interest', authorizeUser('admin'), userControllers.groupUsersByInterest);
+router.get('/group-by-interest', authorizeUser('admin'), userControllers.groupUsersByInterest);
+
+router.get('/:id/posts', userControllers.getSpecificUserPosts);
 
 export const userRoutes = router;

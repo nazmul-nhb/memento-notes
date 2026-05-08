@@ -1,9 +1,10 @@
+import { type PipelineStage, Types } from 'mongoose';
 import { STATUS_CODES } from 'nhb-toolbox/constants';
 import type { Maybe } from 'nhb-toolbox/types';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import { QueryBuilder } from '@/classes/QueryBuilder';
 import { User } from '@/modules/user/user.model';
-import type { TUser } from '@/modules/user/user.types';
+import type { IPlainUser, TUser, TUserGroup, TUserWithPosts } from '@/modules/user/user.types';
 import { safeUser } from '@/modules/user/user.utils';
 import type { TEmail } from '@/types';
 import type { DecodedUser } from '@/types/interfaces';
@@ -30,7 +31,7 @@ const getAllUsersFromDB = async (query?: Record<string, unknown>) => {
 };
 
 /** * Get current user from DB. */
-const getCurrentUserFromDB = async (email: TEmail | undefined) => {
+const getCurrentUserFromDB = async (email: Maybe<TEmail>) => {
 	const user = await User.validateUser(email);
 
 	return safeUser(user);
@@ -131,34 +132,80 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 	return result;
 };
 
-const groupUsersByInterestFromDB = async () => {
-	const users = await User.aggregate([
-		{ $unwind: '$interests' },
-		{
-			$group: {
-				_id: '$interests',
-				users: {
-					$push: { _id: '$_id', name: '$name', email: '$email', role: '$role' },
-				},
-				count: { $sum: 1 },
+const groupUsersByInterestFromDB = async (interest?: string) => {
+	const pipeline: PipelineStage[] = [];
+
+	if (interest) {
+		pipeline.push({
+			$match: {
+				interests: interest,
 			},
-		},
-		{
-			$addFields: {
-				interest: '$_id',
-			},
-		},
-		{
+		});
+
+		pipeline.push({
 			$project: {
-				_id: 0,
-				interest: 1,
-				users: 1,
-				count: 1,
+				password: 0,
 			},
-		},
-	]);
+		});
+	} else {
+		pipeline.push(
+			{
+				$addFields: {
+					originalInterests: '$interests',
+				},
+			},
+			{ $unwind: '$interests' },
+			{
+				$group: {
+					_id: '$interests',
+					count: { $sum: 1 },
+					users: {
+						$push: {
+							_id: '$_id',
+							name: '$name',
+							email: '$email',
+							role: '$role',
+							interests: '$originalInterests',
+							created_at: '$created_at',
+							updated_at: '$updated_at',
+						},
+					},
+				},
+			}
+			// ! No Projection: Keep _id for interest name to have better document view -> first value starts with the interest name.
+			// {
+			// 	$project: {
+			// 		_id: 0,
+			// 		interest: '$_id',
+			// 		count: 1,
+			// 		users: 1,
+			// 	},
+			// }
+		);
+	}
+
+	const users = await User.aggregate<TUserGroup | Omit<IPlainUser, 'password'>>(pipeline);
 
 	return users;
+};
+
+const getSpecificUserPostsFromDB = async (userId: string) => {
+	const [userWithPosts] = await User.aggregate<TUserWithPosts>([
+		{
+			$match: { _id: new Types.ObjectId(userId) },
+		},
+		{
+			$lookup: {
+				from: 'posts',
+				localField: '_id',
+				foreignField: 'user_id',
+				as: 'posts',
+			},
+		},
+		{ $project: { password: 0, posts: { user_id: 0 } } },
+	]);
+
+	return userWithPosts;
 };
 
 export const userServices = {
@@ -169,4 +216,5 @@ export const userServices = {
 	updateUserInDB,
 	removeUserFromDB,
 	groupUsersByInterestFromDB,
+	getSpecificUserPostsFromDB,
 };

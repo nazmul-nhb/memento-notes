@@ -31,11 +31,11 @@ const postSchema = new Schema<IPostDoc>(
 	}
 );
 
-// * User posts listing (pagination)
-postSchema.index({ user_id: 'asc', created_at: 'desc' });
+// * User posts listing (with pagination sorted by created_at)
+postSchema.index({ created_at: 'desc' });
 
-// * Direct fetch by user + post
-postSchema.index({ _id: 'asc', user_id: 'asc' });
+// * For $lookup performance
+postSchema.index({ user_id: 'asc' });
 
 postSchema.statics.findPostById = async function (id: string) {
 	validateObjectId(id, 'post', 'GET: /posts/:id');

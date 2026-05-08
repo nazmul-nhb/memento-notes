@@ -20,8 +20,6 @@ router.get('/', postControllers.getAllPosts);
 
 router.get('/:id', postControllers.getSinglePost);
 
-router.get('/user/:id', postControllers.getSpecificUserPosts);
-
 router.patch(
 	'/:id',
 	validateRequest(postValidations.updateSchema),
