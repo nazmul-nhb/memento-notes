@@ -21,7 +21,13 @@
 		"bracketSpacing": true,
 		"expand": "auto",
 		"useEditorconfig": true,
-		"includes": ["**", "!**/node_modules", "!**/.estimator", "!**/*.md"]
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/.estimator",
+			"!**/*.md",
+			"!**/components/ui"
+		]
 	},
 	"linter": {
 		"enabled": true,
@@ -128,7 +134,13 @@
 				}
 			}
 		},
-		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!.VSCodeCounter/*"]
+		"includes": [
+			"**",
+			"!**/node_modules/*",
+			"!**/dist/*",
+			"!.VSCodeCounter/*",
+			"!**/components/ui"
+		]
 	},
 	"javascript": {
 		"formatter": {
@@ -253,6 +265,11 @@
 			}
 		}
 	],
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"assist": {
 		"enabled": true,
 		"actions": {
@@ -260,6 +277,6 @@
 				"organizeImports": "on"
 			}
 		},
-		"includes": ["**"]
+		"includes": ["**", "!**/components/ui"]
 	}
 }

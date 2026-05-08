@@ -96,6 +96,7 @@
 		"autoincrement",
 		"Backrefs",
 		"errmsg",
+		"fontsource",
 		"ilike",
 		"Instantiator",
 		"nhb",
