@@ -1,0 +1,617 @@
+{
+  "info": {
+    "_postman_id": "6c7c2cc6-6e0e-4a7d-8894-7ec03afed963",
+    "name": "Memento Notes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37213944"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Self Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Hello\",\n    \"email\": \"hello@bangu.com\",\n    \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/auth/register",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Parse the response JSON",
+                  "const response = pm.response.json();",
+                  "",
+                  "const token = response.data.token;",
+                  "",
+                  "// Set the token in an environment variable",
+                  "if (token) {",
+                  "    pm.environment.set('mementoToken', token);",
+                  "} else {",
+                  "    console.error('Token not found in response');",
+                  "}",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@memento.com\",\n    \"password\": \"12345678\"\n}\n// {\n//     \"email\": \"tangu@bangu.com\",\n//     \"password\": \"123456\"\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/auth/login",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Parse the response JSON",
+                  "const response = pm.response.json();",
+                  "",
+                  "const token = response.data.token;",
+                  "",
+                  "// Set the token in an environment variable",
+                  "if (token) {",
+                  "    pm.environment.set('mementoToken', token);",
+                  "} else {",
+                  "    console.error('Token not found in response');",
+                  "}",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{local}}/auth/refresh-token",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Admin: Create a User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Bangu\",\n    \"email\": \"bangu@bangu.com\",\n    \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/users",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Get User List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users?page=1&limit=2",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Get Users Grouped by Interests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users/group-by-interest?interest=reading",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "group-by-interest"
+              ],
+              "query": [
+                {
+                  "key": "interest",
+                  "value": "reading"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts by a Specific User by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users/69fce611b65845d2fff8ed4c/posts",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "69fce611b65845d2fff8ed4c",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Remove User by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users/69fceb4eddff6ff14dd55767",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "69fceb4eddff6ff14dd55767"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Update a User",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"interests\": [\"movie\", \"reading\", \"chess\", \"cricket\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/users/69fcea91ddff6ff14dd55765",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "69fcea91ddff6ff14dd55765"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users/me",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notes",
+      "item": [
+        {
+          "name": "Create a Note",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Bangu Note 6\",\n    \"content\": \"This is a Bangu note 6\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/notes",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "notes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Note List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/notes?limit=10",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "notes"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Note List for Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/notes/admin?limit=16",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "notes",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "16"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a Note",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"title\": \"Updated Bangu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/notes/69fd02c162b6eaf439824cec",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "notes",
+                "69fd02c162b6eaf439824cec"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Note by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/notes/69fd02c362b6eaf439824ced",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "notes",
+                "69fd02c362b6eaf439824ced"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create a Post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Bangu Post 11\",\n    \"body\": \"This is a Bangu post 11\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/posts",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/posts",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts by a Specific User by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/users/69fce611b65845d2fff8ed4c/posts",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "users",
+                "69fce611b65845d2fff8ed4c",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a Post",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"title\": \"Updated Post\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/posts/69fd1d4eccd9980bb2b64d97",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "posts",
+                "69fd1d4eccd9980bb2b64d97"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Post by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/posts/69fd1d7cccd9980bb2b64d98",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "posts",
+                "69fd1d7cccd9980bb2b64d98"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Get the token from the environment variable",
+          "const token = pm.environment.get('mementoToken');",
+          "",
+          "// Set the Authorization header automatically if the token exists",
+          "if (token) {",
+          "\tpm.request.headers.add({",
+          "\t\tkey: 'Authorization',",
+          "\t\tvalue: `Bearer ${token}`",
+          "\t});",
+          "",
+          "\tconsole.log(token)",
+          "}",
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

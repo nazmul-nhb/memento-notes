@@ -94,17 +94,18 @@
 	},
 	"cSpell.words": [
 		"autoincrement",
-		"ilike",
-		"nhb",
-		"pgsql",
-		"stylog",
-		"Stylog",
-		"whitesmoke",
-		"royalblue",
 		"Backrefs",
 		"errmsg",
+		"ilike",
 		"Instantiator",
+		"nhb",
 		"Nonoctal",
-		"Virtuals"
+		"pgsql",
+		"prerequest",
+		"royalblue",
+		"stylog",
+		"Stylog",
+		"Virtuals",
+		"whitesmoke"
 	]
 }
