@@ -18,7 +18,7 @@ A Simple, Fast and Secure Note-Taking App built as a monorepo containing both th
 
 ## Technologies
 
-- **Frontend**: Vite, React 18, TypeScript, Tailwind CSS v4, shadcn/ui, TanStack Query, TanStack Router
+- **Frontend**: Vite, React 19, TypeScript, Tailwind CSS v4, shadcn/ui, TanStack Query, TanStack Router
 - **Backend**: Express, TypeScript, Mongoose, MongoDB, JWT
 
 ## Getting Started

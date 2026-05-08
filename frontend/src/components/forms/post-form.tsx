@@ -73,7 +73,7 @@ export function PostForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 			<div className="space-y-2">
 				<Label htmlFor="post-body">Body</Label>
 				<Textarea
-					className="min-h-32 resize-y"
+					className="min-h-32 max-h-64 resize-y"
 					id="post-body"
 					placeholder="Write your post..."
 					{...register('body')}

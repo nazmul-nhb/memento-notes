@@ -73,7 +73,7 @@ export function NoteForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
 			<div className="space-y-2">
 				<Label htmlFor="note-content">Content</Label>
 				<Textarea
-					className="min-h-32 resize-y"
+					className="min-h-32 max-h-64 resize-y"
 					id="note-content"
 					placeholder="Write your note..."
 					{...register('content')}

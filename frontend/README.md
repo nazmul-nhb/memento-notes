@@ -15,7 +15,7 @@ Password: [PASSWORD]
 
 ## 🚀 Technologies
 
-- **Framework:** React 18, Vite, TypeScript
+- **Framework:** React 19, Vite, TypeScript
 - **Styling:** Tailwind CSS v4, `shadcn/ui`, Framer Motion, Lucide React
 - **Routing:** TanStack Router
 - **Data Fetching & State:** TanStack Query (React Query) v5, Axios
