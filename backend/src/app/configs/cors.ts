@@ -2,7 +2,11 @@ import type { CorsOptions } from 'cors';
 
 export const corsOptions: CorsOptions = {
 	origin: (origin, callback) => {
-		const allowedOrigins = [/^http:\/\/localhost:\d+$/, /^http:\/\/192\.168\.0\.\d+:\d+$/];
+		const allowedOrigins = [
+			/^http:\/\/localhost:\d+$/,
+			/^http:\/\/192\.168\.0\.\d+:\d+$/,
+			'https://memento-notes.vercel.app',
+		];
 
 		if (
 			!origin ||

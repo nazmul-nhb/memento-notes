@@ -137,7 +137,7 @@ function AdminPage() {
 			await deleteNote.mutateAsync(deletingNoteId);
 			setDeletingNoteId(null);
 			toast.success('Note deleted successfully!');
-		} catch (err: unknown) {
+		} catch {
 			toast.error('Failed to delete note.');
 			setDeletingNoteId(null);
 		}
@@ -149,7 +149,7 @@ function AdminPage() {
 			await deletePost.mutateAsync(deletingPostId);
 			setDeletingPostId(null);
 			toast.success('Post deleted successfully!');
-		} catch (err) {
+		} catch {
 			toast.error('Failed to delete post.');
 			setDeletingPostId(null);
 		}
