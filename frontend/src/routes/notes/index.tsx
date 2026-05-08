@@ -36,11 +36,12 @@ export const Route = createFileRoute('/notes/')({
 
 function NotesPage() {
     const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(12);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [editingNote, setEditingNote] = useState<INote | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
-    const { data, isLoading } = useNotes({ page, limit: 12 });
+    const { data, isLoading } = useNotes({ page, limit });
     const createNote = useCreateNote();
     const updateNote = useUpdateNote();
     const deleteNote = useDeleteNote();
@@ -105,7 +106,14 @@ function NotesPage() {
                         </AnimatePresence>
                     </div>
                     {data.meta && (
-                        <PaginationControls meta={data.meta} onPageChange={setPage} />
+                        <PaginationControls 
+                            meta={data.meta} 
+                            onPageChange={setPage} 
+                            onLimitChange={(newLimit) => {
+                                setLimit(newLimit);
+                                setPage(1);
+                            }}
+                        />
                     )}
                 </>
             ) : (

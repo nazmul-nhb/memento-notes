@@ -37,12 +37,13 @@ export const Route = createFileRoute('/posts/')({
 
 function PostsPage() {
     const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(12);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [editingPost, setEditingPost] = useState<IPost | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
     const { user, isAuthenticated } = useAuth();
-    const { data, isLoading } = usePosts({ page, limit: 12 });
+    const { data, isLoading } = usePosts({ page, limit });
     const createPost = useCreatePost();
     const updatePost = useUpdatePost();
     const deletePost = useDeletePost();
@@ -114,7 +115,14 @@ function PostsPage() {
                         </AnimatePresence>
                     </div>
                     {data.meta && (
-                        <PaginationControls meta={data.meta} onPageChange={setPage} />
+                        <PaginationControls 
+                            meta={data.meta} 
+                            onPageChange={setPage}
+                            onLimitChange={(newLimit) => {
+                                setLimit(newLimit);
+                                setPage(1);
+                            }}
+                        />
                     )}
                 </>
             ) : (

@@ -1,9 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, Loader2, Lock, Mail, User, UserPlus } from 'lucide-react';
-import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { registerSchema } from '@/lib/validations';
 import type { IRegisterPayload } from '@/types';
 
 interface RegisterFormProps {
@@ -12,18 +14,24 @@ interface RegisterFormProps {
     error?: string | null;
 }
 
-export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        await onSubmit({ name, email, password });
-    };
+export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<RegisterFormValues>({
+        resolver: zodResolver(registerSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            password: '',
+        },
+    });
 
     return (
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             {error && (
                 <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                     <AlertCircle className="size-4 shrink-0" />
@@ -39,13 +47,14 @@ export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) 
                         autoComplete="name"
                         className="pl-10"
                         id="register-name"
-                        onChange={(e) => setName(e.target.value)}
                         placeholder="John Doe"
-                        required
                         type="text"
-                        value={name}
+                        {...register('name')}
                     />
                 </div>
+                {errors.name && (
+                    <p className="text-sm font-medium text-destructive">{errors.name.message}</p>
+                )}
             </div>
 
             <div className="space-y-2">
@@ -56,13 +65,14 @@ export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) 
                         autoComplete="email"
                         className="pl-10"
                         id="register-email"
-                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@example.com"
-                        required
                         type="email"
-                        value={email}
+                        {...register('email')}
                     />
                 </div>
+                {errors.email && (
+                    <p className="text-sm font-medium text-destructive">{errors.email.message}</p>
+                )}
             </div>
 
             <div className="space-y-2">
@@ -73,15 +83,14 @@ export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) 
                         autoComplete="new-password"
                         className="pl-10"
                         id="register-password"
-                        maxLength={56}
-                        minLength={6}
-                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="At least 6 characters"
-                        required
                         type="password"
-                        value={password}
+                        {...register('password')}
                     />
                 </div>
+                {errors.password && (
+                    <p className="text-sm font-medium text-destructive">{errors.password.message}</p>
+                )}
             </div>
 
             <Button

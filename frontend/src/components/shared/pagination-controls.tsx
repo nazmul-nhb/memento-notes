@@ -1,16 +1,31 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import type { IPaginationMeta } from '@/types';
 
 interface PaginationControlsProps {
     meta: IPaginationMeta;
     onPageChange: (page: number) => void;
+    onLimitChange?: (limit: number) => void;
 }
 
-export function PaginationControls({ meta, onPageChange }: PaginationControlsProps) {
-    const { page, totalPages, total } = meta;
+export function PaginationControls({ meta, onPageChange, onLimitChange }: PaginationControlsProps) {
+    const { page, totalPages, total, limit } = meta;
 
-    if (totalPages <= 1) return null;
+    if (totalPages <= 1 && total <= (limit || 10)) return null;
 
     const pages: (number | '...')[] = [];
     const maxVisible = 5;
@@ -28,52 +43,80 @@ export function PaginationControls({ meta, onPageChange }: PaginationControlsPro
     }
 
     return (
-        <div className="flex items-center justify-between pt-4">
-            <p className="text-sm text-muted-foreground">
-                {total} total result{total !== 1 ? 's' : ''}
-            </p>
-            <div className="flex items-center gap-1">
-                <Button
-                    disabled={page <= 1}
-                    onClick={() => onPageChange(page - 1)}
-                    size="icon-sm"
-                    variant="outline"
-                >
-                    <ChevronLeft className="size-4" />
-                </Button>
-
-                {pages.map((p, i) =>
-                    p === '...' ? (
-                        <span
-                            className="px-1 text-sm text-muted-foreground"
-                            key={`ellipsis-${i}`}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+            <div className="flex items-center gap-4">
+                <p className="text-sm text-muted-foreground whitespace-nowrap">
+                    {total} total result{total !== 1 ? 's' : ''}
+                </p>
+                {onLimitChange && (
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Rows per page:</span>
+                        <Select
+                            value={String(limit || 10)}
+                            onValueChange={(val) => onLimitChange(Number(val))}
                         >
-                            ...
-                        </span>
-                    ) : (
-                        <Button
-                            className={
-                                p === page ? 'bg-violet-600 text-white hover:bg-violet-500' : ''
-                            }
-                            key={p}
-                            onClick={() => onPageChange(p)}
-                            size="icon-sm"
-                            variant={p === page ? 'default' : 'outline'}
-                        >
-                            {p}
-                        </Button>
-                    )
+                            <SelectTrigger className="h-8 w-16">
+                                <SelectValue placeholder="10" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="10">10</SelectItem>
+                                <SelectItem value="20">20</SelectItem>
+                                <SelectItem value="50">50</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
                 )}
-
-                <Button
-                    disabled={page >= totalPages}
-                    onClick={() => onPageChange(page + 1)}
-                    size="icon-sm"
-                    variant="outline"
-                >
-                    <ChevronRight className="size-4" />
-                </Button>
             </div>
+
+            {totalPages > 1 && (
+                <Pagination className="mx-0 w-auto">
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious
+                                className={page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (page > 1) onPageChange(page - 1);
+                                }}
+                            />
+                        </PaginationItem>
+
+                        {pages.map((p, i) =>
+                            p === '...' ? (
+                                <PaginationItem key={`ellipsis-${i}`}>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                            ) : (
+                                <PaginationItem key={p}>
+                                    <PaginationLink
+                                        className={p === page ? 'bg-violet-600 text-white hover:bg-violet-500 hover:text-white' : 'cursor-pointer'}
+                                        href="#"
+                                        isActive={p === page}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            onPageChange(p as number);
+                                        }}
+                                    >
+                                        {p}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )
+                        )}
+
+                        <PaginationItem>
+                            <PaginationNext
+                                className={page >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (page < totalPages) onPageChange(page + 1);
+                                }}
+                            />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </div>
     );
 }

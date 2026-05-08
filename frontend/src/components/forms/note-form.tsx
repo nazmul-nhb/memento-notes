@@ -1,10 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, Save } from 'lucide-react';
-import type { FormEvent } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { noteCreationSchema, noteUpdateSchema } from '@/lib/validations';
 import type { ICreateNotePayload, INote, IUpdateNotePayload } from '@/types';
 
 interface NoteFormProps {
@@ -14,44 +17,57 @@ interface NoteFormProps {
     mode?: 'create' | 'edit';
 }
 
+type NoteFormValues = z.infer<typeof noteCreationSchema>;
+
 export function NoteForm({ initialData, onSubmit, isLoading, mode = 'create' }: NoteFormProps) {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, dirtyFields },
+    } = useForm<NoteFormValues>({
+        resolver: zodResolver(noteCreationSchema),
+        defaultValues: {
+            title: '',
+            content: '',
+        },
+    });
 
     useEffect(() => {
         if (initialData) {
-            setTitle(initialData.title);
-            setContent(initialData.content);
+            reset({
+                title: initialData.title,
+                content: initialData.content,
+            });
         }
-    }, [initialData]);
+    }, [initialData, reset]);
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-
+    const handleFormSubmit = async (data: NoteFormValues) => {
         if (mode === 'edit') {
             const payload: IUpdateNotePayload = {};
-            if (title !== initialData?.title) payload.title = title;
-            if (content !== initialData?.content) payload.content = content;
+            if (dirtyFields.title) payload.title = data.title;
+            if (dirtyFields.content) payload.content = data.content;
+            
             if (Object.keys(payload).length > 0) {
                 await onSubmit(payload);
             }
         } else {
-            await onSubmit({ title, content });
+            await onSubmit(data);
         }
     };
 
     return (
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="space-y-2">
                 <Label htmlFor="note-title">Title</Label>
                 <Input
                     id="note-title"
-                    maxLength={255}
-                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Note title..."
-                    required={mode === 'create'}
-                    value={title}
+                    {...register('title')}
                 />
+                {errors.title && (
+                    <p className="text-sm font-medium text-destructive">{errors.title.message}</p>
+                )}
             </div>
 
             <div className="space-y-2">
@@ -59,11 +75,12 @@ export function NoteForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
                 <Textarea
                     className="min-h-32 resize-y"
                     id="note-content"
-                    onChange={(e) => setContent(e.target.value)}
                     placeholder="Write your note..."
-                    required={mode === 'create'}
-                    value={content}
+                    {...register('content')}
                 />
+                {errors.content && (
+                    <p className="text-sm font-medium text-destructive">{errors.content.message}</p>
+                )}
             </div>
 
             <Button

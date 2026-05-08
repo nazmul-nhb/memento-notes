@@ -55,7 +55,9 @@ export const Route = createFileRoute('/admin/')({
 
 function AdminPage() {
     const [userPage, setUserPage] = useState(1);
+    const [userLimit, setUserLimit] = useState(10);
     const [notePage, setNotePage] = useState(1);
+    const [noteLimit, setNoteLimit] = useState(12);
     const [interestFilter, setInterestFilter] = useState('');
     const [isCreateUserOpen, setIsCreateUserOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<IUser | null>(null);
@@ -63,11 +65,11 @@ function AdminPage() {
 
     const { data: usersData, isLoading: usersLoading } = useUsers({
         page: userPage,
-        limit: 10,
+        limit: userLimit,
     });
     const { data: notesData, isLoading: notesLoading } = useAdminNotes({
         page: notePage,
-        limit: 12,
+        limit: noteLimit,
     });
     const { data: interestGroups, isLoading: interestsLoading } = useUsersByInterest(
         interestFilter || undefined
@@ -242,6 +244,10 @@ function AdminPage() {
                                 <PaginationControls
                                     meta={usersData.meta}
                                     onPageChange={setUserPage}
+                                    onLimitChange={(limit) => {
+                                        setUserLimit(limit);
+                                        setUserPage(1);
+                                    }}
                                 />
                             )}
                         </>
@@ -267,6 +273,10 @@ function AdminPage() {
                                 <PaginationControls
                                     meta={notesData.meta}
                                     onPageChange={setNotePage}
+                                    onLimitChange={(limit) => {
+                                        setNoteLimit(limit);
+                                        setNotePage(1);
+                                    }}
                                 />
                             )}
                         </>
