@@ -40,19 +40,25 @@ const updateUser = catchAsync(async (req, res) => {
 const removeUser = catchAsync(async (req, res) => {
 	const result = await userServices.removeUserFromDB(req?.params?.id, req.user?.email);
 
-	sendResponse(res, 'User', 'DELETE', result);
+	sendResponse(
+		res,
+		'User',
+		'DELETE',
+		result,
+		'Successfully deleted user and all associated data!'
+	);
 });
 
 const groupUsersByInterest = catchAsync(async (req, res) => {
 	const users = await userServices.groupUsersByInterestFromDB(req?.query?.interest as string);
 
-	sendResponse(res, 'User', 'GET', users);
+	sendResponse(res, 'User', 'GET', users, 'Successfully retrieved users by interest!');
 });
 
 const getSpecificUserPosts = catchAsync(async (req, res) => {
 	const posts = await userServices.getSpecificUserPostsFromDB(req?.params?.id);
 
-	sendResponse(res, 'Post', 'GET', posts);
+	sendResponse(res, 'Post', 'GET', posts, 'Successfully retrieved user posts!');
 });
 
 export const userControllers = {

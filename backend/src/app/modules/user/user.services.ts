@@ -3,6 +3,8 @@ import { STATUS_CODES } from 'nhb-toolbox/constants';
 import type { Maybe } from 'nhb-toolbox/types';
 import { ErrorWithStatus } from '@/classes/ErrorWithStatus';
 import { QueryBuilder } from '@/classes/QueryBuilder';
+import { Note } from '@/modules/note/note.model';
+import { Post } from '@/modules/post/post.model';
 import { User } from '@/modules/user/user.model';
 import type { IPlainUser, TUser, TUserGroup, TUserWithPosts } from '@/modules/user/user.types';
 import { safeUser } from '@/modules/user/user.utils';
@@ -10,6 +12,7 @@ import type { TEmail } from '@/types';
 import type { DecodedUser } from '@/types/interfaces';
 import { hashPassword } from '@/utilities/authUtilities';
 import { getQueryMeta } from '@/utilities/queryHelpers';
+import { runTransaction } from '@/utilities/runTransaction';
 import { validateObjectId } from '@/utilities/validateObjectId';
 
 /** * Create a new user in MongoDB `user` collection. */
@@ -118,18 +121,24 @@ const removeUserFromDB = async (id: string, email: Maybe<TEmail>) => {
 		);
 	}
 
-	const result = await User.deleteOne({ _id: id });
+	return await runTransaction(async (session) => {
+		const result = await User.deleteOne({ _id: id }, { session });
 
-	if (result.deletedCount < 1) {
-		throw new ErrorWithStatus(
-			'Delete Failed Error',
-			`Failed to delete User with ID ${id}!`,
-			STATUS_CODES.INTERNAL_SERVER_ERROR,
-			'DELETE: /users/:id'
-		);
-	}
+		if (result.deletedCount < 1) {
+			throw new ErrorWithStatus(
+				'Delete Failed Error',
+				`Failed to delete User with ID ${id}!`,
+				STATUS_CODES.INTERNAL_SERVER_ERROR,
+				'DELETE: /users/:id'
+			);
+		}
 
-	return result;
+		await Note.deleteMany({ user_id: id }, { session });
+
+		await Post.deleteMany({ user_id: id }, { session });
+
+		return result;
+	});
 };
 
 const groupUsersByInterestFromDB = async (interest?: string) => {
