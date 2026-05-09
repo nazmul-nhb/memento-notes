@@ -4,6 +4,7 @@ import express from 'express';
 import path from 'path';
 import { cwd } from 'process';
 import serveFavicon from 'serve-favicon';
+import { corsOptions } from '@/configs/cors';
 import { catchAllErrors, handleRouteNotFound } from '@/middlewares/errorHandlers';
 import { requestLogger } from '@/middlewares/requestLogger';
 import router from '@/routes';
@@ -21,7 +22,8 @@ app.use(express.static(path.join(cwd(), 'public')));
 app.use(serveFavicon(path.join(cwd(), 'public', 'favicon.png')));
 
 // * Respect CORS Policy
-app.use(cors({ origin: '*' }));
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // * Use Cookie Parser
 app.use(cookieParser());

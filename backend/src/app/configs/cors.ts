@@ -3,7 +3,9 @@ import { isString } from 'nhb-toolbox';
 
 const allowedOrigins = [
 	/^http:\/\/localhost:\d+$/,
+	/^http:\/\/127\.0\.0\.1:\d+$/,
 	/^http:\/\/192\.168\.0\.\d+:\d+$/,
+	/^https:\/\/nazmul-hassan-.*\.vercel\.app$/,
 	'https://memento-notes.vercel.app',
 ];
 
