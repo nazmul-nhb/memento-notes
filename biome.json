@@ -6,7 +6,7 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"includes": ["**", "!!**/node_modules"],
+		"includes": ["**", "!!**/node_modules", "!**/src/routeTree.gen.ts"],
 		"ignoreUnknown": true
 	},
 	"formatter": {
@@ -26,7 +26,8 @@
 			"!**/node_modules",
 			"!**/.estimator",
 			"!**/*.md",
-			"!**/components/ui"
+			"!**/components/ui",
+			"!*/**/routeTree.gen.ts"
 		]
 	},
 	"linter": {
@@ -235,7 +236,7 @@
 			}
 		},
 		{
-			"includes": ["*/**/*types.ts", "*/**/types/*.ts", "*/**/routeTree.gen.ts"],
+			"includes": ["*/**/*types.ts", "*/**/types/*.ts"],
 			"linter": {
 				"rules": {
 					"suspicious": {

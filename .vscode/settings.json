@@ -4,7 +4,7 @@
 	"eslint.enable": false,
 	"prettier.enable": false,
 	"biome.enabled": true,
-	// "biome.lsp.bin": "./node_modules/@biomejs/biome/bin",
+	"biome.lsp.bin": "./node_modules/@biomejs/biome/bin",
 	// "editor.defaultFormatter": "biomejs.biome",
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"

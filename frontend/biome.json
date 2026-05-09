@@ -7,15 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": [
-			"**",
-			"!node_modules",
-			"!.next",
-			"!dist",
-			"!build",
-			"!**/components/ui",
-			"!src/routeTree.gen.ts"
-		]
+		"includes": ["**", "!node_modules", "!.next", "!dist", "!build", "!**/components/ui"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -27,7 +19,15 @@
 		"attributePosition": "auto",
 		"bracketSameLine": false,
 		"bracketSpacing": true,
-		"expand": "auto"
+		"expand": "auto",
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/.estimator",
+			"!**/*.md",
+			"!**/components/ui"
+		]
 	},
 	"linter": {
 		"enabled": true,
@@ -92,7 +92,7 @@
 	},
 	"overrides": [
 		{
-			"includes": ["__ideas__/**/*.ts", "__*.ts", "*/**/routeTree.gen.ts"],
+			"includes": ["__ideas__/**/*.ts", "__*.ts", "!*/**/routeTree.gen.ts"],
 			"linter": {
 				"rules": {
 					"correctness": { "noUnusedVariables": "off" },
