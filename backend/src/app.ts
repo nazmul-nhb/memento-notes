@@ -17,7 +17,7 @@ app.set('trust proxy', true);
 
 // * Respect CORS Policy
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 // ! Serve static files from the 'public' directory
 app.use(express.static(path.join(cwd(), 'public')));
