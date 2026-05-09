@@ -10,6 +10,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { useAuth } from '@/providers/auth-provider';
+import type { ILoginPayload } from '@/types';
 
 export const Route = createFileRoute('/login')({
 	component: LoginPage,
@@ -21,7 +22,7 @@ function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const handleLogin = async (payload: { email: string; password: string }) => {
+	const handleLogin = async (payload: ILoginPayload) => {
 		setIsLoading(true);
 		setError(null);
 		try {

@@ -1,17 +1,18 @@
 import type { CorsOptions } from 'cors';
+import { isString } from 'nhb-toolbox';
+
+const allowedOrigins = [
+	/^http:\/\/localhost:\d+$/,
+	/^http:\/\/192\.168\.0\.\d+:\d+$/,
+	'https://memento-notes.vercel.app',
+];
 
 export const corsOptions: CorsOptions = {
 	origin: (origin, callback) => {
-		const allowedOrigins = [
-			/^http:\/\/localhost:\d+$/,
-			/^http:\/\/192\.168\.0\.\d+:\d+$/,
-			'https://memento-notes.vercel.app',
-		];
-
 		if (
 			!origin ||
 			allowedOrigins.some((pattern) =>
-				typeof pattern === 'string' ? pattern === origin : pattern.test(origin)
+				isString(pattern) ? pattern === origin : pattern.test(origin)
 			)
 		) {
 			callback(null, true);
