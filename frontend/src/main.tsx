@@ -10,19 +10,19 @@ import { routeTree } from '@/routeTree.gen';
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
-    interface Register {
-        router: typeof router;
-    }
+	interface Register {
+		router: typeof router;
+	}
 }
 
 const root = document.getElementById('root') as HTMLElement;
 
 createRoot(root).render(
-    <StrictMode>
-        <QueryProvider>
-            <AuthProvider>
-                <RouterProvider router={router} />
-            </AuthProvider>
-        </QueryProvider>
-    </StrictMode>
+	<StrictMode>
+		<QueryProvider>
+			<AuthProvider>
+				<RouterProvider router={router} />
+			</AuthProvider>
+		</QueryProvider>
+	</StrictMode>
 );

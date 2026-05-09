@@ -9,87 +9,87 @@ import { Separator } from '@/components/ui/separator';
 import { useSinglePost } from '@/hooks/use-posts';
 
 export const Route = createFileRoute('/posts/$postId')({
-    component: SinglePostPage,
+	component: SinglePostPage,
 });
 
 function SinglePostPage() {
-    const { postId } = Route.useParams();
-    const { data: post, isLoading } = useSinglePost(postId);
+	const { postId } = Route.useParams();
+	const { data: post, isLoading } = useSinglePost(postId);
 
-    if (isLoading) {
-        return (
-            <PageContainer className="flex min-h-[60vh] items-center justify-center">
-                <Loader2 className="size-8 animate-spin text-violet-500" />
-            </PageContainer>
-        );
-    }
+	if (isLoading) {
+		return (
+			<PageContainer className="flex min-h-[60vh] items-center justify-center">
+				<Loader2 className="size-8 animate-spin text-violet-500" />
+			</PageContainer>
+		);
+	}
 
-    if (!post) {
-        return (
-            <PageContainer className="flex min-h-[60vh] items-center justify-center">
-                <div className="text-center">
-                    <h2 className="text-xl font-semibold text-white">Post not found</h2>
-                    <p className="mt-2 text-muted-foreground">
-                        The post you&apos;re looking for doesn&apos;t exist.
-                    </p>
-                    <Link className="mt-4 inline-block" to="/posts">
-                        <Button variant="outline">
-                            <ArrowLeft className="mr-2 size-4" />
-                            Back to Posts
-                        </Button>
-                    </Link>
-                </div>
-            </PageContainer>
-        );
-    }
+	if (!post) {
+		return (
+			<PageContainer className="flex min-h-[60vh] items-center justify-center">
+				<div className="text-center">
+					<h2 className="text-xl font-semibold text-white">Post not found</h2>
+					<p className="mt-2 text-muted-foreground">
+						The post you&apos;re looking for doesn&apos;t exist.
+					</p>
+					<Link className="mt-4 inline-block" to="/posts">
+						<Button variant="outline">
+							<ArrowLeft className="mr-2 size-4" />
+							Back to Posts
+						</Button>
+					</Link>
+				</div>
+			</PageContainer>
+		);
+	}
 
-    const author = isValidObject(post.user_id) ? post.user_id : null;
+	const author = isValidObject(post.user_id) ? post.user_id : null;
 
-    return (
-        <PageContainer>
-            <Link className="mb-6 inline-flex" to="/posts">
-                <Button size="sm" variant="ghost">
-                    <ArrowLeft className="mr-2 size-4" />
-                    Back to Posts
-                </Button>
-            </Link>
+	return (
+		<PageContainer>
+			<Link className="mb-6 inline-flex" to="/posts">
+				<Button size="sm" variant="ghost">
+					<ArrowLeft className="mr-2 size-4" />
+					Back to Posts
+				</Button>
+			</Link>
 
-            <motion.article
-                animate={{ opacity: 1, y: 0 }}
-                className="mx-auto max-w-3xl"
-                initial={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3 }}
-            >
-                <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-                    {post.title}
-                </h1>
+			<motion.article
+				animate={{ opacity: 1, y: 0 }}
+				className="mx-auto max-w-3xl"
+				initial={{ opacity: 0, y: 20 }}
+				transition={{ duration: 0.3 }}
+			>
+				<h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+					{post.title}
+				</h1>
 
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                    {author && (
-                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                            <User className="size-4" />
-                            <span>{author.name}</span>
-                        </div>
-                    )}
-                    <Badge
-                        className="border-white/10 bg-white/5 text-muted-foreground"
-                        variant="outline"
-                    >
-                        <Calendar className="mr-1 size-3" />
-                        {formatDate({ date: post.created_at, format: 'mmm D, yyyy hh:mma' })}
-                    </Badge>
-                </div>
+				<div className="mt-4 flex flex-wrap items-center gap-3">
+					{author && (
+						<div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+							<User className="size-4" />
+							<span>{author.name}</span>
+						</div>
+					)}
+					<Badge
+						className="border-white/10 bg-white/5 text-muted-foreground"
+						variant="outline"
+					>
+						<Calendar className="mr-1 size-3" />
+						{formatDate({ date: post.created_at, format: 'mmm D, yyyy hh:mma' })}
+					</Badge>
+				</div>
 
-                <Separator className="my-6 bg-white/10" />
+				<Separator className="my-6 bg-white/10" />
 
-                <div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed">
-                    {post.body.split('\n').map((paragraph, i) => (
-                        <p className="mb-4" key={i}>
-                            {paragraph}
-                        </p>
-                    ))}
-                </div>
-            </motion.article>
-        </PageContainer>
-    );
+				<div className="prose prose-invert max-w-none text-muted-foreground leading-relaxed">
+					{post.body.split('\n').map((paragraph, i) => (
+						<p className="mb-4" key={i}>
+							{paragraph}
+						</p>
+					))}
+				</div>
+			</motion.article>
+		</PageContainer>
+	);
 }

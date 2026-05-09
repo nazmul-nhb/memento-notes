@@ -7,17 +7,17 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        tailwindcss(),
-        babel({ presets: [reactCompilerPreset()] }),
-        tanstackRouter({ quoteStyle: 'single', target: 'react' }),
-    ],
-    server: { host: true },
-    build: { chunkSizeWarningLimit: 2048 },
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, './src'),
-        },
-    },
+	plugins: [
+		react(),
+		tailwindcss(),
+		babel({ presets: [reactCompilerPreset()] }),
+		tanstackRouter({ quoteStyle: 'single', target: 'react' }),
+	],
+	server: { host: true },
+	build: { chunkSizeWarningLimit: 2048 },
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+		},
+	},
 });

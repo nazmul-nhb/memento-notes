@@ -231,7 +231,7 @@
 			}
 		},
 		{
-			"includes": ["src/**/*types.ts", "src/**/types/*.ts"],
+			"includes": ["src/**/*types.ts", "src/**/types/*.ts", "*/**/routeTree.gen.ts"],
 			"linter": {
 				"rules": {
 					"suspicious": {
