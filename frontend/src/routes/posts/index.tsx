@@ -115,13 +115,13 @@ function PostsPage() {
                         </AnimatePresence>
                     </div>
                     {data.meta && (
-                        <PaginationControls 
-                            meta={data.meta} 
-                            onPageChange={setPage}
+                        <PaginationControls
+                            meta={data.meta}
                             onLimitChange={(newLimit) => {
                                 setLimit(newLimit);
                                 setPage(1);
                             }}
+                            onPageChange={setPage}
                         />
                     )}
                 </>

@@ -1,6 +1,6 @@
 {
   "name": "memento-notes",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A Simple, Fast and Secure Note-Taking App",
   "scripts": {
     "install:all": "pnpm install && pnpm --dir backend install && pnpm --dir frontend install",
@@ -8,7 +8,7 @@
     "dev": "concurrently \"pnpm dev:b\" \"pnpm wait && pnpm dev:f\"",
     "dev:b": "pnpm --dir backend dev",
     "dev:f": "pnpm --dir frontend dev",
-    "build": "concurrently \"pnpm build:b\" \"pnpm wait && pnpm build:f\"",
+    "build": "pnpm build:b && pnpm build:f",
     "build:b": "pnpm --dir backend build",
     "build:f": "pnpm --dir frontend build",
     "start": "concurrently \"pnpm start:b\" \"pnpm wait && pnpm start:f\"",
