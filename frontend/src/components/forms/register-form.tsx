@@ -22,7 +22,7 @@ export function RegisterForm({ onSubmit, isLoading, error }: RegisterFormProps) 
         handleSubmit,
         formState: { errors },
     } = useForm<RegisterFormValues>({
-        // @ts-expect-error
+        // @ts-ignore This is false negative but need to ignore because Vercel treats ts-expect-error as unused
         resolver: zodResolver(registerSchema),
         defaultValues: {
             name: '',
