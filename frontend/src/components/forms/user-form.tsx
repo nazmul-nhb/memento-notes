@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { userCreationSchema, userUpdateSchema } from '@/lib/validations';
-import type { ICreateUserPayload, IUpdateUserPayload, IUser, TUserRole } from '@/types';
+import type { ICreateUserPayload, IUpdateUserPayload, IUser } from '@/types';
 
 interface UserFormProps {
     initialData?: IUser;
@@ -84,7 +84,7 @@ export function UserForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
             if (dirtyFields.name && data.name) payload.name = data.name;
             if (dirtyFields.email && data.email) payload.email = data.email;
             if (data.password) payload.password = data.password;
-            if (dirtyFields.role && data.role) payload.role = data.role as TUserRole;
+            if (dirtyFields.role && data.role) payload.role = data.role;
 
             if (JSON.stringify(data.interests) !== JSON.stringify(initialData?.interests)) {
                 payload.interests = data.interests;
@@ -93,14 +93,7 @@ export function UserForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
                 await onSubmit(payload);
             }
         } else {
-            await onSubmit({
-                name: data.name!,
-                email: data.email!,
-                password: data.password!,
-                role: data.role || 'user',
-                interests:
-                    data.interests && data.interests.length > 0 ? data.interests : undefined,
-            });
+            await onSubmit(data);
         }
     };
 

@@ -1,14 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/lib/QueryKeys';
 import { postService } from '@/services/post.service';
 import type { ICreatePostPayload, IPaginationParams, IUpdatePostPayload } from '@/types';
 
-export const postKeys = {
-    all: ['posts'] as const,
-    lists: () => [...postKeys.all, 'list'] as const,
-    list: (params?: IPaginationParams) => [...postKeys.lists(), params] as const,
-    details: () => [...postKeys.all, 'detail'] as const,
-    detail: (id: string) => [...postKeys.details(), id] as const,
-};
+class PostsQueryKeys extends QueryKeys<'posts'> {
+    constructor() {
+        super('posts');
+    }
+
+    get details() {
+        return [...this.all, 'details'] as const;
+    }
+
+    detail(id: string) {
+        return [...this.details, id] as const;
+    }
+}
+
+const postKeys = new PostsQueryKeys();
 
 export function usePosts(params?: IPaginationParams) {
     return useQuery({

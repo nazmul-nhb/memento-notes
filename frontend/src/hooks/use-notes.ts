@@ -1,14 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/lib/QueryKeys';
 import { noteService } from '@/services/note.service';
 import type { ICreateNotePayload, IPaginationParams, IUpdateNotePayload } from '@/types';
 
-export const noteKeys = {
-    all: ['notes'] as const,
-    lists: () => [...noteKeys.all, 'list'] as const,
-    list: (params?: IPaginationParams) => [...noteKeys.lists(), params] as const,
-    adminLists: () => [...noteKeys.all, 'admin'] as const,
-    adminList: (params?: IPaginationParams) => [...noteKeys.adminLists(), params] as const,
-};
+class NotesQueryKeys extends QueryKeys<'notes'> {
+    constructor() {
+        super('notes');
+    }
+
+    get adminLists() {
+        return [...this.all, 'admin'] as const;
+    }
+
+    adminList(params?: IPaginationParams) {
+        return [...this.adminLists, params] as const;
+    }
+}
+
+export const noteKeys = new NotesQueryKeys();
 
 export function useNotes(params?: IPaginationParams) {
     return useQuery({

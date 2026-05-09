@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Calendar, Edit, Trash2 } from 'lucide-react';
+import { formatDate, isValidObject } from 'nhb-toolbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -13,12 +14,7 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note, onEdit, onDelete, showAuthor }: NoteCardProps) {
-    const author = typeof note.user_id === 'object' ? note.user_id : null;
-    const formattedDate = new Date(note.created_at).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-    });
+    const author = isValidObject(note.user_id) ? note.user_id : null;
 
     return (
         <motion.div
@@ -78,7 +74,10 @@ export function NoteCard({ note, onEdit, onDelete, showAuthor }: NoteCardProps) 
                             variant="outline"
                         >
                             <Calendar className="mr-1 size-3" />
-                            {formattedDate}
+                            {formatDate({
+                                date: note.created_at,
+                                format: 'mmm D, yyyy hh:mma',
+                            })}
                         </Badge>
                     </div>
                 </CardContent>

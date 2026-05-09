@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { AnimatePresence } from 'framer-motion';
 import { Plus, StickyNote } from 'lucide-react';
+import { isValidObject } from 'nhb-toolbox';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { PostForm } from '@/components/forms/post-form';
@@ -50,7 +51,7 @@ function PostsPage() {
 
     const isOwner = (post: IPost) => {
         if (!user) return false;
-        const authorId = typeof post.user_id === 'object' ? post.user_id._id : post.user_id;
+        const authorId = isValidObject(post.user_id) ? post.user_id._id : post.user_id;
         return authorId === user._id;
     };
 

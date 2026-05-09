@@ -8,203 +8,203 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as AdminIndexRouteImport } from './routes/admin/index';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as LoginRouteImport } from './routes/login';
-import { Route as NotesIndexRouteImport } from './routes/notes/index';
-import { Route as PostsPostIdRouteImport } from './routes/posts/$postId';
-import { Route as PostsIndexRouteImport } from './routes/posts/index';
-import { Route as ProfileRouteImport } from './routes/profile';
-import { Route as RegisterRouteImport } from './routes/register';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostsIndexRouteImport } from './routes/posts/index'
+import { Route as NotesIndexRouteImport } from './routes/notes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 
 const RegisterRoute = RegisterRouteImport.update({
-    id: '/register',
-    path: '/register',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
-    id: '/profile',
-    path: '/profile',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
-    id: '/login',
-    path: '/login',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
-    id: '/posts/',
-    path: '/posts/',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesIndexRoute = NotesIndexRouteImport.update({
-    id: '/notes/',
-    path: '/notes/',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/notes/',
+  path: '/notes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-    id: '/admin/',
-    path: '/admin/',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsPostIdRoute = PostsPostIdRouteImport.update({
-    id: '/posts/$postId',
-    path: '/posts/$postId',
-    getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/$postId',
+  path: '/posts/$postId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-    '/': typeof IndexRoute;
-    '/login': typeof LoginRoute;
-    '/profile': typeof ProfileRoute;
-    '/register': typeof RegisterRoute;
-    '/posts/$postId': typeof PostsPostIdRoute;
-    '/admin/': typeof AdminIndexRoute;
-    '/notes/': typeof NotesIndexRoute;
-    '/posts/': typeof PostsIndexRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/notes/': typeof NotesIndexRoute
+  '/posts/': typeof PostsIndexRoute
 }
 export interface FileRoutesByTo {
-    '/': typeof IndexRoute;
-    '/login': typeof LoginRoute;
-    '/profile': typeof ProfileRoute;
-    '/register': typeof RegisterRoute;
-    '/posts/$postId': typeof PostsPostIdRoute;
-    '/admin': typeof AdminIndexRoute;
-    '/notes': typeof NotesIndexRoute;
-    '/posts': typeof PostsIndexRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/notes': typeof NotesIndexRoute
+  '/posts': typeof PostsIndexRoute
 }
 export interface FileRoutesById {
-    __root__: typeof rootRouteImport;
-    '/': typeof IndexRoute;
-    '/login': typeof LoginRoute;
-    '/profile': typeof ProfileRoute;
-    '/register': typeof RegisterRoute;
-    '/posts/$postId': typeof PostsPostIdRoute;
-    '/admin/': typeof AdminIndexRoute;
-    '/notes/': typeof NotesIndexRoute;
-    '/posts/': typeof PostsIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/notes/': typeof NotesIndexRoute
+  '/posts/': typeof PostsIndexRoute
 }
 export interface FileRouteTypes {
-    fileRoutesByFullPath: FileRoutesByFullPath;
-    fullPaths:
-        | '/'
-        | '/login'
-        | '/profile'
-        | '/register'
-        | '/posts/$postId'
-        | '/admin/'
-        | '/notes/'
-        | '/posts/';
-    fileRoutesByTo: FileRoutesByTo;
-    to:
-        | '/'
-        | '/login'
-        | '/profile'
-        | '/register'
-        | '/posts/$postId'
-        | '/admin'
-        | '/notes'
-        | '/posts';
-    id:
-        | '__root__'
-        | '/'
-        | '/login'
-        | '/profile'
-        | '/register'
-        | '/posts/$postId'
-        | '/admin/'
-        | '/notes/'
-        | '/posts/';
-    fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/posts/$postId'
+    | '/admin/'
+    | '/notes/'
+    | '/posts/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/posts/$postId'
+    | '/admin'
+    | '/notes'
+    | '/posts'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/posts/$postId'
+    | '/admin/'
+    | '/notes/'
+    | '/posts/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-    IndexRoute: typeof IndexRoute;
-    LoginRoute: typeof LoginRoute;
-    ProfileRoute: typeof ProfileRoute;
-    RegisterRoute: typeof RegisterRoute;
-    PostsPostIdRoute: typeof PostsPostIdRoute;
-    AdminIndexRoute: typeof AdminIndexRoute;
-    NotesIndexRoute: typeof NotesIndexRoute;
-    PostsIndexRoute: typeof PostsIndexRoute;
+  IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
+  PostsPostIdRoute: typeof PostsPostIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  NotesIndexRoute: typeof NotesIndexRoute
+  PostsIndexRoute: typeof PostsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
-    interface FileRoutesByPath {
-        '/register': {
-            id: '/register';
-            path: '/register';
-            fullPath: '/register';
-            preLoaderRoute: typeof RegisterRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/profile': {
-            id: '/profile';
-            path: '/profile';
-            fullPath: '/profile';
-            preLoaderRoute: typeof ProfileRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/login': {
-            id: '/login';
-            path: '/login';
-            fullPath: '/login';
-            preLoaderRoute: typeof LoginRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/': {
-            id: '/';
-            path: '/';
-            fullPath: '/';
-            preLoaderRoute: typeof IndexRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/posts/': {
-            id: '/posts/';
-            path: '/posts';
-            fullPath: '/posts/';
-            preLoaderRoute: typeof PostsIndexRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/notes/': {
-            id: '/notes/';
-            path: '/notes';
-            fullPath: '/notes/';
-            preLoaderRoute: typeof NotesIndexRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/admin/': {
-            id: '/admin/';
-            path: '/admin';
-            fullPath: '/admin/';
-            preLoaderRoute: typeof AdminIndexRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
-        '/posts/$postId': {
-            id: '/posts/$postId';
-            path: '/posts/$postId';
-            fullPath: '/posts/$postId';
-            preLoaderRoute: typeof PostsPostIdRouteImport;
-            parentRoute: typeof rootRouteImport;
-        };
+  interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts/'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/': {
+      id: '/notes/'
+      path: '/notes'
+      fullPath: '/notes/'
+      preLoaderRoute: typeof NotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-    IndexRoute: IndexRoute,
-    LoginRoute: LoginRoute,
-    ProfileRoute: ProfileRoute,
-    RegisterRoute: RegisterRoute,
-    PostsPostIdRoute: PostsPostIdRoute,
-    AdminIndexRoute: AdminIndexRoute,
-    NotesIndexRoute: NotesIndexRoute,
-    PostsIndexRoute: PostsIndexRoute,
-};
+  IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
+  PostsPostIdRoute: PostsPostIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  NotesIndexRoute: NotesIndexRoute,
+  PostsIndexRoute: PostsIndexRoute,
+}
 export const routeTree = rootRouteImport
-    ._addFileChildren(rootRouteChildren)
-    ._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()

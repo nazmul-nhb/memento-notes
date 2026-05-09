@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isBrowser } from 'nhb-toolbox';
 
 const BASE_URL = import.meta.env.VITE_BASE_API;
 
@@ -96,7 +97,7 @@ api.interceptors.response.use(
                 processQueue(refreshError, null);
                 removeAccessToken();
                 // Redirect to login
-                if (typeof window !== 'undefined') {
+                if (isBrowser()) {
                     window.location.href = '/login';
                 }
                 return Promise.reject(refreshError);

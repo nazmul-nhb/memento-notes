@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Loader2, User } from 'lucide-react';
+import { formatDate, isValidObject } from 'nhb-toolbox';
 import { PageContainer } from '@/components/layout/page-container';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -42,12 +43,7 @@ function SinglePostPage() {
         );
     }
 
-    const author = typeof post.user_id === 'object' ? post.user_id : null;
-    const formattedDate = new Date(post.created_at).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-    });
+    const author = isValidObject(post.user_id) ? post.user_id : null;
 
     return (
         <PageContainer>
@@ -80,7 +76,7 @@ function SinglePostPage() {
                         variant="outline"
                     >
                         <Calendar className="mr-1 size-3" />
-                        {formattedDate}
+                        {formatDate({ date: post.created_at, format: 'mmm D, yyyy hh:mma' })}
                     </Badge>
                 </div>
 

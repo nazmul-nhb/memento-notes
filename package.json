@@ -1,6 +1,6 @@
 {
   "name": "memento-notes",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "A Simple, Fast and Secure Note-Taking App",
   "scripts": {
     "install:all": "pnpm install && pnpm --dir backend install && pnpm --dir frontend install",

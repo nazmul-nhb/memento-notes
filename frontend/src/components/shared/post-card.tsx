@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { Calendar, Edit, Trash2, User } from 'lucide-react';
+import { formatDate, isValidObject } from 'nhb-toolbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -14,12 +15,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, onEdit, onDelete, isOwner }: PostCardProps) {
-    const author = typeof post.user_id === 'object' ? post.user_id : null;
-    const formattedDate = new Date(post.created_at).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-    });
+    const author = isValidObject(post.user_id) ? post.user_id : null;
 
     return (
         <motion.div
@@ -85,7 +81,10 @@ export function PostCard({ post, onEdit, onDelete, isOwner }: PostCardProps) {
                             variant="outline"
                         >
                             <Calendar className="mr-1 size-3" />
-                            {formattedDate}
+                            {formatDate({
+                                date: post.created_at,
+                                format: 'mmm D, yyyy hh:mma',
+                            })}
                         </Badge>
                     </div>
                 </CardContent>
