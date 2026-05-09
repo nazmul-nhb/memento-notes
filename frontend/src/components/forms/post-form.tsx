@@ -26,7 +26,7 @@ export function PostForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
         reset,
         formState: { errors, dirtyFields },
     } = useForm<PostFormValues>({
-        // @ts-ignore This is false negative but need to ignore because Vercel treats ts-expect-error as unused
+        // @ts-expect-error This is false negative but need to ignore because Vercel treats ts-expect-error as unused
         resolver: zodResolver(mode === 'create' ? postCreationSchema : postUpdateSchema),
         defaultValues: {
             title: '',
@@ -58,7 +58,7 @@ export function PostForm({ initialData, onSubmit, isLoading, mode = 'create' }: 
     };
 
     return (
-        // @ts-ignore This is false negative but need to ignore because Vercel treats ts-expect-error as unused
+        // @ts-expect-error This is false negative but need to ignore because Vercel treats ts-expect-error as unused
         <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="space-y-2">
                 <Label htmlFor="post-title">Title</Label>
